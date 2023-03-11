@@ -1,0 +1,296 @@
+  .logos {
+    margin-left: 2.5rem ;
+    width: 70px;
+}
+@media (max-width: 767px) {
+    .carousel-inner .carousel-item > div {
+        display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+        display: block;
+    }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(25%);
+    }
+
+    .carousel-inner .carousel-item-start.active, 
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-25%);
+    }
+    .carousel-inner {
+      width: 100%;
+    }
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start { 
+    transform: translateX(0);
+}
+
+.card-text{
+    font-size: 14px !important;
+}
+
+
+.testimonials-clean {
+    color:#313437;
+    background-color:#FFF;
+    margin-bottom: 3rem;
+  }
+  
+  .testimonials-clean p {
+    color:#7d8285;
+  }
+  
+  .testimonials-clean h2 {
+    font-weight:bold;
+    margin-bottom:40px;
+    padding-top:40px;
+    color:inherit;
+  }
+  
+  @media (max-width:767px) {
+    .testimonials-clean h2 {
+      margin-bottom:25px;
+      padding-top:25px;
+      font-size:24px;
+    }
+  }
+  
+  .testimonials-clean .intro {
+    font-size:16px;
+    margin-top: 3rem;
+    color: black;
+    font-weight: 300 !important;
+   }
+  
+  .testimonials-clean .intro p {
+    margin-bottom:0;
+  }
+  
+  .testimonials-clean .people {
+    padding:50px 0 20px;
+  }
+  
+  .testimonials-clean .item {
+    margin-bottom:32px;
+  }
+  
+  @media (min-width:768px) {
+    .testimonials-clean .item {
+      height:220px;
+    }
+  }
+  
+  .testimonials-clean .item .box {
+    padding:30px;
+    background-color:#6B70EC;
+    position:relative;
+    height: 210px;
+  }
+  
+  .testimonials-clean .item .box:after {
+    content:'';
+    position:absolute;
+    left:30px;
+    bottom:-24px;
+    width:0;
+    height:0;
+    border:15px solid transparent;
+    border-width:12px 15px;
+    border-top-color:#6B70EC;
+  }
+  
+  .testimonials-clean .item .author {
+    margin-top:28px;
+    padding-left:25px;
+  }
+  
+  .testimonials-clean .item .name {
+    margin-bottom:2px;
+    color:inherit;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .testimonials-clean .item .title {
+    font-size:13px;
+    color:#9da9ae;
+  }
+  
+  .testimonials-clean .item .description {
+    font-size:15px;
+    margin-bottom:0;
+    color:#fff
+  }
+  
+  .testimonials-clean .item img {
+    max-width:40px;
+    float:left;
+    margin-right:12px;
+    margin-top:-5px;
+  }
+  
+  .footer-text a{
+    color: #F2F2F2 !important;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .footer-text{
+    color: #F2F2F2 !important;
+  }
+
+.card-price {
+  font-size: 22px;
+  color:#6B70EC
+}
+
+.card-btn{
+  float:right; 
+  width: 60%; 
+  font-size: 15px;
+}
+
+.card-btn-full{
+  float:right; 
+  width: 100%; 
+  font-size: 15px;
+}
+
+.section-btn{
+  font-size: 15px;
+  border-color: #6B70EC; 
+  border-radius: 0%; 
+  padding:1rem 2rem
+}
+
+.page-title{
+  color: #6B70EC; 
+  font-weight:400
+}
+
+.accordion-item{
+  margin-top: 1rem !important;
+}
+.accordion-button{
+  font-size: 15px;
+  color: #000 !important; 
+  background-color: #F3F4FF;
+  border: 0 !important;
+}
+
+.auth-title{
+  color: #000 !important;
+  font-weight: 400;
+  font-size: 22px;
+}
+
+
+.navbar {
+  height: 100px;
+}
+
+.fa-stack[data-count]:after{
+  position:absolute;
+  right:39%;
+  top:25%;
+  content: attr(data-count);
+  font-size:40%;
+  padding:.4em;
+  border-radius:999px;
+  line-height:.65em;
+  color: white;
+  text-align:center;
+  min-width:1.5em;
+  font-weight:bold;
+  background:#FFA360;
+}
+
+
+
+/* Admin Section Styling */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /* font-family: 'LEMON MILK', sans-serif; */
+  background-color: #6B70EC;
+  overflow-x: hidden;
+  padding-top: 3rem;
+}
+
+.sidenav a {
+  padding: 2.5rem 6px 6px 32px;
+  text-decoration: none;
+  font-size: 17px;
+  color: #fff;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+/* Style the list */
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 14px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #4B5563;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #6B70EC;
+  text-decoration: underline;
+}
+
+.topic-btn{
+  font-size: 15px;
+  border-color: #FFA360; 
+  border-radius: 0%; 
+  padding:0.5rem 1rem
+}
