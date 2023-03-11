@@ -3,10 +3,9 @@
        
         <SideNav />
         <div class="main" style="">
-            
         <TopHeader />
         <div class=" container-fluid" style="padding: 1.3rem;">
-    <ul class="breadcrumb">
+         <ul class="breadcrumb">
         <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
         <li><a href="#">Course Information</a></li>
         <li class="active"><a href="#">Edit Course</a></li>
@@ -19,24 +18,24 @@
                 <form action="" >
                     <div class="mb-3 mt-3">
                     <label for="name" class="form-label">Course Title</label>
-                    <input type="text" class="form-control" id="email" placeholder="" name="email">
+                    <input type="text" class="form-control" placeholder="" v-model="course_title">
                     </div>
                     <div class="mb-3">
                     <label for="pwd" class="form-label">Course Cost</label>
-                    <input type="text" class="form-control" id="pwd" placeholder="" name="pswd">
+                    <input type="text" class="form-control" id="pwd" placeholder="" v-model="course_cost">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Thumbnail</label>
                         <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        <input type="file" class="form-control" id="pwd" name="pswd">
+                        <input type="file" class="form-control" id="pwd" name="pswd" ref="course_thumbnail">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Brief</label>
-                        <textarea rows="4" class="form-control"></textarea>
+                        <textarea rows="4" class="form-control" v-model="course_brief"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Key Take Away</label>
-                        <textarea rows="4" class="form-control"></textarea>
+                        <textarea rows="4" class="form-control" v-model="key_take_away"></textarea>
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -45,11 +44,11 @@
                     <p>Topic 1</p>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Topic name</label>
-                        <input type="text" class="form-control" id="pwd" placeholder="" name="pswd">
+                        <input type="text" class="form-control" id="pwd" placeholder="" v-model="topic_name">
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Upload Course Image</label>
-                        <input type="file" class="form-control" id="" placeholder="" name="pswd">
+                        <input type="file" class="form-control" id="" placeholder="" name="pswd" ref="course_image">
                     </div>
                     </div>
                     
@@ -84,9 +83,31 @@
 <script>
 import SideNav from '@/components/General/SideNav.vue';
 import TopHeader from '@/components/General/TopHeader.vue';
+import Api from './Api';
+
 export default {
     name: "CourseUpload",
-    components: {TopHeader, SideNav}
-    
+    components: {TopHeader, SideNav},
+    data() {
+        return {
+            course_title: '',
+            course_cost: '',
+            course_thumbnail: '',
+            course_brief: '',
+            key_take_away: '',
+            topics: [],
+            course_image: '',
+            topic_name: ''
+        }
+    },
+
+    method: {
+        createCourse(){
+            Api.axios_instance.post(Api.baseUrl+'courses').
+            then(res => {
+                console.log(res);
+            })
+        }
+    }
 }
 </script>

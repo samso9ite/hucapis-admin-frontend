@@ -151,7 +151,8 @@ import TopHeader from '../components/General/TopHeader.vue'
         components: {SideNav, TopHeader},
         data(){
             return{
-
+                course_brief: '',
+                topics: []
             }
         }
     }
