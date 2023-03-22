@@ -137,7 +137,7 @@ export default {
           await this.LogIn(res.data.message.user);
           await this.SetToken(res.data.message.token);
           if(this.interests.length !== 0){
-            this.$router.push("/dashboard");
+            this.$router.push("/course-upload");
           }else{
             this.$router.push("/interests");
           }

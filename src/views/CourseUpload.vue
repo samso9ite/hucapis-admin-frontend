@@ -14,45 +14,8 @@
       <div class="col-lg-12" style="padding-left: 2rem;">
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
-                <h6 style="font-weight:400; font-size:17px">CREATE NEW COURSE</h6>
-                <form action="" >
-                    <div class="mb-3 mt-3">
-                    <label for="name" class="form-label">Course Title</label>
-                    <input type="text" class="form-control" placeholder="" v-model="course_title">
-                    </div>
-                    <div class="mb-3">
-                    <label for="pwd" class="form-label">Course Cost</label>
-                    <input type="text" class="form-control" id="pwd" placeholder="" v-model="course_cost">
-                    </div>
-                    <div class="mb-3">
-                        <label for="pwd" class="form-label">Course Thumbnail</label>
-                        <p>Lorem ipsum dolor sit amet consectetur.</p>
-                        <input type="file" class="form-control" id="pwd" name="pswd" ref="course_thumbnail">
-                    </div>
-                    <div class="mb-3">
-                        <label for="pwd" class="form-label">Course Brief</label>
-                        <textarea rows="4" class="form-control" v-model="course_brief"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="pwd" class="form-label">Key Take Away</label>
-                        <textarea rows="4" class="form-control" v-model="key_take_away"></textarea>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <span style="font-weight: 400;">TOPICS</span> <span style="float: right;">  <a href="#" class="btn topic-btn">Add More Topic</a></span>
-                        </div>
-                    <p>Topic 1</p>
-                    <div class="mb-3">
-                        <label for="pwd" class="form-label">Topic name</label>
-                        <input type="text" class="form-control" id="pwd" placeholder="" v-model="topic_name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="pwd" class="form-label">Upload Course Image</label>
-                        <input type="file" class="form-control" id="" placeholder="" name="pswd" ref="course_image">
-                    </div>
-                    </div>
-                    
-                </form>
+             <CreateCourse @courseCreated="courseCreated" v-show="created"/>
+             <CreateTopic v-show="!created"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -84,29 +47,26 @@
 import SideNav from '@/components/General/SideNav.vue';
 import TopHeader from '@/components/General/TopHeader.vue';
 import Api from './Api';
+import CreateCourse from '../components/CreateCourse.vue';
+import CreateTopic from '../components/CreateTopic'
 
 export default {
     name: "CourseUpload",
-    components: {TopHeader, SideNav},
+    components: {TopHeader, SideNav, CreateCourse, CreateTopic},
     data() {
         return {
-            course_title: '',
-            course_cost: '',
-            course_thumbnail: '',
-            course_brief: '',
-            key_take_away: '',
-            topics: [],
-            course_image: '',
-            topic_name: ''
+            created: false
+        }
+    },
+    computed:{
+        count: function(){
+            return this.topic_count
         }
     },
 
-    method: {
-        createCourse(){
-            Api.axios_instance.post(Api.baseUrl+'courses').
-            then(res => {
-                console.log(res);
-            })
+    methods:{
+        courseCreated(){
+            this.created = true
         }
     }
 }
