@@ -17,8 +17,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Brief</label>
-                        {{  }}
-                        <textarea rows="4" class="form-control" v-model="course_brief"></textarea>
+                        <textarea rows="4" class="form-control" v-model="course_brief" @change="preview"></textarea>
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Key Take Away</label>
@@ -38,6 +37,7 @@
                     <input type="number" class="form-control" id="pwd" placeholder="" v-model="expiry_period">
                     </div>
 
+                    
                     <span @click="createCourse" class="btn topic-btn mt-3">Create Course</span>
                 </form>
     </div>
@@ -47,8 +47,11 @@
 import { VueEditor } from "vue2-editor";
 import Uploader from "vux-uploader-component";
 import Api from '../../../hucapic_main_frontend/src/views/Api';
+import { mapGetters } from 'vuex';
+
     export default{
     components: {VueEditor,  Uploader},
+    computed: {...mapGetters({instructors:"instructors"})},
     data(){
         return{
             course_title: '',
@@ -63,12 +66,15 @@ import Api from '../../../hucapic_main_frontend/src/views/Api';
             topic_count: [], 
             fileList: [],
             expiryperiod_type: 'Year',
-            expiry_period: '',
-            uploadUrl: 'https://www.mocky.io/v2/5d4fb20b3000005c111099e3'
+            expiry_period: ''
         }
      },
 
      methods: {
+        preview(){
+            let courseData = {title:this.course_title, cost:this.course_cost, image:this.course_thumbnail, description:this.course_brief}
+            this.$emit("previewCourse", courseData )
+        },
         handleFileUpload(){
            console.log(this.course_thumbnail);
         },
@@ -76,17 +82,13 @@ import Api from '../../../hucapic_main_frontend/src/views/Api';
         this.topic_count.length
        },   
         createCourse(){
-            // Api.axios_instance.post(Api.baseUrl+'courses').
-            // then(res => {
-            //     console.log(res);
-            // })
             console.log(this.course_thumbnail[0].blob);
             const formData = new FormData();
                 formData.append('title', this.course_title)
                 formData.append('description', this.key_take_away)
                 formData.append('cost', this.course_cost)
                 formData.append('summary', this.course_brief)
-                formData.append('thumbnail', this.course_thumbnail[0].blob);
+                formData.append('thumbnail', this.course_thumbnail[0].url);
                 formData.append('expiryperiod_type', this.expiryperiod_type);
                 formData.append('expiry_period', this.expiry_period)
                 console.log(formData);
