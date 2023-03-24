@@ -15,7 +15,7 @@
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="!created"/>
-             <CreateTopic v-show="!created"/>
+             <CreateTopic v-show="created"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -30,7 +30,6 @@
                     <div class="div mt-4">
                     <span class="card-price"> ${{ cost }}</span> 
                     </div>
-                        
                     </div>
                 </div>
             </div>
@@ -60,7 +59,7 @@ export default {
             title: 'Course Title',
             description: 'Your course decription would be here ',
             image: 'https://designshack.net/wp-content/uploads/placeholder-image.png',
-            cost: '0.0'
+            cost: '0.0',
         }
     },
     computed:{
@@ -72,7 +71,7 @@ export default {
     methods:{
         courseCreated(){
             this.created = true
-        },
+         },
 
         previewCourse(courseData){
             this.title = courseData.title

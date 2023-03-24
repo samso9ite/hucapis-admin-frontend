@@ -23,7 +23,7 @@ export default new Vuex.Store({
       state.all_courses = payload.all_courses
     },
     getAllInstructors(state, payload){
-      state.all_instructors = payload.instructors
+      state.all_instructors = payload
     },
     setUser(state, payload) {
       state.user = payload
@@ -49,12 +49,11 @@ export default new Vuex.Store({
       let user = null
       commit('LogOut', user)
     },
-
     async getInstructors(context){
       await Api.axios_instance.get(Api.baseUrl+'course_instructors')
       .then(res => {
-        console.log(res);
-        context.commit('getAllInstructors', res.data)
+        let payload = res.data.data
+        context.commit('getAllInstructors', payload)
       })
     }
   },
