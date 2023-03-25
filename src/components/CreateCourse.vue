@@ -59,7 +59,7 @@
 <script>
 import { VueEditor } from "vue2-editor";
 import Uploader from "vux-uploader-component";
-import Api from '../../../hucapic_main_frontend/src/views/Api';
+import Api from '../views/Api';
 import { mapGetters } from 'vuex';
 import Multiselect from 'vue-multiselect'
 

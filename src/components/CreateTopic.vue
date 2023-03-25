@@ -34,7 +34,7 @@
 <script>
 
 import Uploader from "vux-uploader-component";
-import Api from '../../../hucapic_main_frontend/src/views/Api';
+import Api from '../views/Api';
 
 export default{
         components: {Uploader},
