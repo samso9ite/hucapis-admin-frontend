@@ -36,4 +36,4 @@ jobs:
         username: kingname
         password: p*cT435w6wQn
         local-dir: dist/
-        server-dir: hadmin.king.name.ng
+        server-dir: hadmin.king.name.ng/
