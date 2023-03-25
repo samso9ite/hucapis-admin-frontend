@@ -8,6 +8,7 @@ import VueToastr from "vue-toastr";
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 
+
 Vue.use(VueSweetalert2).use(VueToastr).use(VueFileAgent)
 Vue.config.productionTip = false
 

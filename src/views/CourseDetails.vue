@@ -6,7 +6,7 @@
 
         <div class=" container-fluid" style="padding: 1.3rem;">
     <ul class="breadcrumb">
-        <li><a href="#"><img src="../../public../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
+        <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
         <li><a href="#">Course Information</a></li>
     </ul>
       
@@ -16,8 +16,8 @@
             <div class="col-lg-7">
                 <div class="" style="">
                     <h5 style="color:#6B70EC; font-weight: 400; margin-bottom: 2rem;">COURSE TITLE</h5>
-                    <img class="card-img-top" src="../../public../../public/assets/vid.svg" alt="Card image">
-                    <div class="card-img-overlay" style="color: white;"> <img src="../../public../../public/assets/course_taken_play.svg" style=" margin-right:auto; margin-top: 27%; display:block"/> </div>
+                    <img class="card-img-top" src="../../public/assets/vid.svg" alt="Card image">
+                    <div class="card-img-overlay" style="color: white;"> <img src="../../public/assets/course_taken_play.svg" style=" margin-right:auto; margin-top: 27%; display:block"/> </div>
                 </div>
     
                 <ul class="nav nav-tabs" style="height: 2.7rem !important;">

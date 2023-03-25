@@ -16,11 +16,12 @@ export default new Vuex.Store({
     isAuthenticated: state => !!state.user,
     StateUser: state => state.user,
     token: state => state.token,
-    instructors: state => state.all_instructors
+    instructors: state => state.all_instructors,
+    allCourses: state => state.all_courses
   },
   mutations: {
-    allCoursesStore(state, payload) {
-      state.all_courses = payload.all_courses
+    setAllCourses(state, payload) {
+      state.all_courses = payload
     },
     getAllInstructors(state, payload){
       state.all_instructors = payload
@@ -53,9 +54,16 @@ export default new Vuex.Store({
       await Api.axios_instance.get(Api.baseUrl+'course_instructors')
       .then(res => {
         let payload = res.data.data
+        console.log(payload);
         context.commit('getAllInstructors', payload)
       })
-    }
+    },
+    async AllCourses({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "courses").then(res => {
+        console.log(res.data.data.data );
+        commit('setAllCourses', res.data.data.data)
+      });
+    },
   },
   modules: {
   },

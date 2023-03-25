@@ -59,7 +59,21 @@ const routes = [
     name: 'Revenue',
     component: () => import('../views/Revenue.vue')
   },
-
+  {
+    path: '/courses',
+    name: 'Courses',
+    component: () => import('../views/Courses.vue')
+  },
+  {
+    path: '/instructors',
+    name: 'Instructors',
+    component: () => import('../views/Instructors.vue')
+  },
+  {
+    path: '/tutors',
+    name: 'Tutors',
+    component: () => import('../views/Tutors.vue')
+  }
  
 ]
 

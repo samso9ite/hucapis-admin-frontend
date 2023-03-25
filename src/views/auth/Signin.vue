@@ -112,7 +112,6 @@ export default {
       password: "",
       loading: false,
       errors: [],
-      interests: []
     };
   },
   methods: {
@@ -133,14 +132,7 @@ export default {
           sessionStorage.setItem("token", res.data.message.token);
           sessionStorage.setItem("phone", res.data.message.user.phone_number);
           sessionStorage.setItem("photo", res.data.message.user.photo);
-          await this.getInterests()
-          await this.LogIn(res.data.message.user);
-          await this.SetToken(res.data.message.token);
-          if(this.interests.length !== 0){
-            this.$router.push("/course-upload");
-          }else{
-            this.$router.push("/interests");
-          }
+          this.$router.push("/courses");
           
         })
         .catch((error) => {
@@ -161,13 +153,6 @@ export default {
           this.loading = false;
         });
     },
-
-    async getInterests(){
-     await Api.axios_instance.get(Api.baseUrl+'learners/interest')
-        .then(res => {
-            this.interests = res.data.data
-        })
-    }
   },
   components: { router },
 };
