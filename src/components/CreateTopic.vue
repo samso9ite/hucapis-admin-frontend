@@ -4,12 +4,13 @@
             <span style="font-weight: 400;">TOPICS </span> <span style="float: right;">  <span @click="addTopic" class="btn topic-btn">Add More Topic</span></span>
         </div>
         <div>
-            <div v-for="(topic, index) in topics" :key="index" class="mb-3">
-                <p class="mb-3">Topic {{ index }}</p>
-                <label for="pwd" class="form-label">Topic name{{ index }} </label>
-                <input type="text" class="form-control" placeholder="" v-model="topic.title">
+            <!-- <div v-for="(topic, index) in topics" :key="index" class="mb-3">
+                <p class="mb-3">Topic {{ index }}</p> -->
+                <label for="pwd" class="form-label">Topic name </label>
+                
+                <input type="text" class="form-control" placeholder="" v-model="title">
                 <label for="pwd" class="form-label mt-4">Description</label>
-                <textarea class="form-control" rows="3"  v-model="topic.description" /> 
+                <textarea class="form-control" rows="3"  v-model="description" /> 
                 <div class="mb-3">
                     <!-- <VueFileAgent
                         ref="vueFileAgent"
@@ -22,9 +23,11 @@
                     
                         v-model="resource">
                     </VueFileAgent> -->
-
-                    <input type="file" accept=""  @change="handleFileUpload" ref="reso" />
+                <label for="pwd" class="form-label mt-4">Upload Video</label>
+                    <input type="file" accept="" @change="handleFileUpload" ref="vid" />
                 </div>
+
+                <span @click="submitTopic" class="btn topic-btn mt-3">Add Topic </span>
             </div>
         </div>
       
@@ -40,40 +43,54 @@ export default{
         components: {Uploader},
         data(){
             return{
-                resource: [],
+                resources: [],
+                resource: '',
+                topic_id: '',
                 course_id: localStorage.getItem('created_course_id'),
-                // uploadHeaders: {'Accept': 'application/json', 'Authorization': 'Bearer ${token}'},
+                description: '',
                 topics: [{title: '', description: '', resource: '', course_id: localStorage.getItem('created_course_id')}],
                 fileRecordsForUpload: [],
             }
         },
 
         methods: {
-      
             addTopic(){
-                console.log(this.course_id);
-                this.topics.push({title: '', description: '', resource: '', course_id: this.course_id})
-                console.log(this.topics);
+                this.topics.push({title: '', description: '', course_id: this.course_id})
             },
             handleFileUpload(){
-                // console.log(this.$refs.reso);
-                this.resource = this.$refs.reso[0].files[0]
-                console.log(this.resource);
-                const formData = new FormData();
-                formData.append('resource', this.resource)
-                formData.append('topic_id', '1')
-                Api.axios_instance.post(Api.baseUrl+'add_resource_to_topic', formData).
-                then(res => {
-                    console.log(res);
-                })
+                this.resource = this.$refs.vid.files[0]
+            //     const formData = new FormData();
+            //     formData.append('resources', this.resource)
+            //     formData.append('topic_id', this.course_id)
+            //     Api.axios_instance.post(Api.baseUrl+'add_resource_to_topic', formData).
+            //     then(res => {
+            //         console.log(res);
+            // })
                 
         },
-            submitTopics(){
-                const formData = new FormData();
-                formData.append('topics[]', this.topics)
-                Api.axios_instance.post(Api.baseUrl+'topics_multiple', formData)
-                .then(res => {
-                    console.log(res);
+            submitTopic(){
+                // const formData = new FormData();
+                // formData.append('topics[]', this.topics)
+                let formData = {
+                    title: this.title,
+                    description: this.description,
+                    course_id: this.course_id
+                }
+                 Api.axios_instance.post(Api.baseUrl+'topics', formData)
+                .then(async res => {
+                    this.topic_id = res.data.data.id
+                    const vidData = new FormData()
+                    vidData.append('resources', this.resource)
+                     vidData.append('topic_id', this.topic_id)
+                    await Api.axios_instance.post(Api.baseUrl+'add_resource_to_topic', vidData)
+                    .then(res => {
+                        this.topic_id = '',
+                        this.resource = '',
+                        this.description = '',
+                        this.title = ''
+                        this.$toastr.s("Topic Created Successfully");
+                    })
+                   
                 })
             }
         }

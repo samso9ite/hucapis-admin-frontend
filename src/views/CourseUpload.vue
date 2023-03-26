@@ -15,7 +15,7 @@
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="!created"/>
-             <CreateTopic v-show="!created"/>
+             <CreateTopic v-show="created"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
