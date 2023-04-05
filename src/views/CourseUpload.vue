@@ -5,17 +5,16 @@
         <div class="main" style="">
         <TopHeader />
         <div class=" container-fluid" style="padding: 1.3rem;">
-         <ul class="breadcrumb">
-        <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
-        <li><a href="#">Course Information</a></li>
-        <li class="active"><a href="#">Edit Course</a></li>
-   
-      </ul>
+        <ul class="breadcrumb">
+            <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
+            <li><a href="#">Course Information</a></li>
+            <li class="active"><a href="#">Edit Course</a></li>
+        </ul>
       <div class="col-lg-12" style="padding-left: 2rem;">
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
-             <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="!created"/>
-             <CreateTopic v-show="created"/>
+             <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-if="mode === 'upload' || !created" :mode="mode" :course="course"/>
+             <CreateTopic v-show="created || mode === 'editTopic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -60,6 +59,9 @@ export default {
             description: 'Your course decription would be here ',
             image: 'https://designshack.net/wp-content/uploads/placeholder-image.png',
             cost: '0.0',
+            mode: '',
+            id: '',
+            course: ''
         }
     },
     computed:{
@@ -69,22 +71,43 @@ export default {
     },
 
     methods:{
-        
         courseCreated(){
             this.created = true
          },
-
         previewCourse(courseData){
             this.title = courseData.title
             this.cost = courseData.cost
             this.image = courseData.image[0].url
             this.description = courseData.description
-            console.log(courseData);  
+        },
+        getId(){
+            this.id = this.$route.params.course_id
+        },
+        getCourse(){
+           let allCourses =  this.$store.getters.allCourses
+           this.course = allCourses.filter(course => course.id == this.id)
+           this.$store.commit('courseEdit', this.course)
+        },
+        getRoute(){
+            if (this.$route.path === ('/course-edit/'+this.id)) {
+                this.mode = 'editCourse'
+                    } else if (this.$route.path === ('/course-upload'))  {
+                    this.mode = 'upload'
+                } else{
+                    this.created = true
+                    this.mode = "editTopic"
+            }
         }
     },
 
     mounted(){
         this.$store.dispatch('getInstructors')
+        this.getId()
+        this.getRoute()
+        if(this.mode == 'editCourse' ||  this.mode == 'editTopic'){
+            this.getCourse()
+        }
+        
     }
 }
 </script>

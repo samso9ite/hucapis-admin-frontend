@@ -132,3 +132,9 @@ import Api from './Api';
         }
     }
 </script>
+
+<style scoped>
+.card{
+    width:auto
+}
+</style>

@@ -12,14 +12,68 @@
       
       <div class="row mt-4">
         <div class="col-lg-12">
-            <img src="../../public/assets/adminNew/instructor_pic.svg" height="50px"  style="padding-right: 1rem"/> INSTRUCTOR / PARTNER NAME  <span style="float: right;"><button class="btn btn-danger">Delete Profile</button></span>
+            <img src="../../public/assets/adminNew/instructor_pic.svg" height="50px"  style="padding-right: 1rem"/> {{ instructor[0].name }} <span style="float: right;"><button class="btn btn-danger">Delete Profile</button></span>
         </div>
        
         <span class="mt-4">
-            <a href="" style="padding-right: 2rem;">Overview</a> <a href="" style="padding-right: 2rem; text-decoration: none; color: black;">Students </a>  <a href="" style="padding-right: 2rem; text-decoration: none; color: black;">Courses </a>  <a href="" style="padding-right: 2rem; text-decoration: none; color: black;">Revenue</a> 
+            <a @click="switchComponent('overview')" class="overview">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('revenue')" class="overview">Revenue</a> 
       </span>
-</div>
     
+     
+    </div>
+    <div class="col-lg-12 mt-5">
+   
+        <div class="row" v-show="component === 'courses'">
+            <div class="col-md-4" v-for="course in courses" :key="course">
+                <Course :course="course"/><br>
+            </div>
+        </div>
+
+        <div class="row" style="margin-right: 2rem;" v-show="component === 'overview'">
+            <div class="col-lg-3" >
+                <div class="card" style="flex-direction: row;">
+                    <img class="card-img-left" src="../../public/assets/admin/courses_book.svg" alt="Card image" width="50">
+                    <div class="" style="padding-left:1rem; padding-top:1rem ;">
+                    <h4 class="card-title"><b>{{ courses.length }}</b></h4>
+                    <p>Total Courses</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card" style="flex-direction: row;">
+                    <img class="card-img-left" src="../../public/assets/admin/total_student.svg" alt="Card image" width="50">
+                    <div class="" style="padding-left:1rem; padding-top:1rem ;">
+                    <h4 class="card-title"><b>$928,928,928</b></h4>
+                    <p>Total Students</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="card" style="flex-direction: row;">
+                    <img class="card-img-left" src="../../public/assets/admin/total_revenues.svg" alt="Card image" width="50">
+                    <div class="" style="padding-left:1rem; padding-top:1rem ;">
+                    <h4 class="card-title"><b>$928,928,928</b></h4>
+                    <p> Total Revenues</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-lg-3">
+                <div class="card" style="
+                    flex-direction: row;">
+                    <img class="card-img-left" src="../assets/admin/dashboard_money.svg" alt="Card image" width="50">
+                    <div class="" style="padding-left:1rem; padding-top:1rem ;">
+                    <h4 class="card-title"><b>$928,928,928</b></h4>
+                    <p>Today’s sales</p>
+                    </div>
+                </div>
+            </div> -->
+   
+        </div>
+
+</div>
       </div>
 </div>
     </div>
@@ -28,15 +82,56 @@
 <script>
 import SideNav from '@/components/General/SideNav.vue';
 import TopHeader from '@/components/General/TopHeader.vue';
+import Course from '@/components/General/Course.vue'
 import Api from './Api';
 
     export default{
         name: "Tutors",
-        components: {SideNav, TopHeader},
+        components: {SideNav, TopHeader, Course},
         data() {
             return {
-                
+                instructor: '',
+                courses: [],
+                activeComponent: '',
+                component: 'overview',
+                total_courses: '',
+                total_revenues: '',
+                total_student: '',
+                id: ''
             }
         },
+        methods: {
+            instructorDetail(){
+                let instructors = this.$store.getters.instructors
+                this.id = this.$route.params.id
+                let instructor = instructors.filter(instructor => instructor.id == this.id )
+                this.instructor = instructor
+                this.courses = instructor[0].courses_i_instruct
+                
+                console.log(this.courses);
+                console.log(instructor);
+            },
+            switchComponent(page){
+                this.component = page
+            },
+
+            deleteInstructor(){
+
+            }
+        },
+
+        mounted(){
+            this.instructorDetail()
+        }
     }
 </script>
+
+<style scoped>
+.card {
+    width:auto !important;
+}
+.overview{
+    padding-right: 2rem; text-decoration: none; color: black;
+    cursor: pointer;
+}
+</style>

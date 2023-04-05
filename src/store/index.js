@@ -10,7 +10,8 @@ export default new Vuex.Store({
     all_courses: [],
     user: null,
     token: null,
-    all_instructors: []
+    all_instructors: [],
+    course_edit: {}
   },
   getters: {
     isAuthenticated: state => !!state.user,
@@ -37,6 +38,9 @@ export default new Vuex.Store({
       state.token = null
 
     },
+    courseEdit(state, payload){
+      state.course_edit = payload
+    }
   },
   actions: {
     async LogIn({ commit }, user) {
@@ -54,13 +58,11 @@ export default new Vuex.Store({
       await Api.axios_instance.get(Api.baseUrl+'course_instructors')
       .then(res => {
         let payload = res.data.data
-        console.log(payload);
         context.commit('getAllInstructors', payload)
       })
     },
     async AllCourses({ commit }) {
       Api.axios_instance.get(Api.baseUrl + "courses").then(res => {
-        console.log(res.data.data.data );
         commit('setAllCourses', res.data.data.data)
       });
     },

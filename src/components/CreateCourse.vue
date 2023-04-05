@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h6 style="font-weight:400; font-size:17px">CREATE NEW COURSE</h6>
+        <h6 style="font-weight:400; font-size:17px">CREATE NEW COURSE {{ mode }}</h6>
                 <form action="" >
                     <div class="mb-3 mt-3">
                     <label for="name" class="form-label">Course Title </label>
-                    <input type="text" class="form-control" placeholder="" v-model="course_title">
+                    <input type="text" class="form-control" placeholder="" v-model="course_title" >
                     </div>
                     <div class="mb-3">
                     <label for="pwd" class="form-label">Course Cost</label>
@@ -13,11 +13,11 @@
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Thumbnail</label>
                         <p>Lorem ipsum dolor sit amet consectetur.</p>
-                         <uploader v-model="course_thumbnail" :limit="1"  :autoUpload="false"></uploader>
+                         <uploader v-model="course_thumbnail" :limit="1" @change="upload"  :autoUpload="false"></uploader>
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Brief</label>
-                        <textarea rows="4" class="form-control" v-model="course_brief" @change="preview"></textarea>
+                        <textarea rows="4" class="form-control" v-model="course_brief" ></textarea>
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Key Take Away</label>
@@ -26,9 +26,9 @@
                     <div class="mb-3">
                     <label for="pwd" class="form-label">Expiry Period Type</label>
                     <select class="form-select" v-model="expiryperiod_type">
-                        <option value="Day"> Day</option>
-                        <option value="Month"> Month</option>
-                        <option value="Year"> Year</option>
+                        <option value="day"> Day</option>
+                        <option value="month"> Month</option>
+                        <option value="year"> Year</option>
                     </select>
                     </div>
                     <div class="mb-3">
@@ -51,7 +51,10 @@
                     </multiselect>
                     </div>
                     
-                    <span @click="createCourse" class="btn topic-btn mt-3">Create Course</span>
+                    <span @click="createCourse" class="btn topic-btn mt-3">
+                       <span v-if="mode ===  'upload'">  Create Course </span> <span v-if="mode === 'editCourse'">Update Course </span>
+                    </span>
+                    
                 </form>
     </div>
 </template>
@@ -66,6 +69,7 @@ import Multiselect from 'vue-multiselect'
 export default{
     components: {VueEditor,  Uploader, Multiselect},
     computed: {...mapGetters({instructors:"instructors"})},
+    props: ['mode', 'course'],
     data(){
         return{
             course_title: '',
@@ -81,20 +85,40 @@ export default{
             fileList: [],
             expiryperiod_type: 'Year',
             expiry_period: '',
-            selected_instructors: [],
-            
+            selected_instructors: [],  
+            course_edit: {},
+            course_id: ''
         }
      },
 
+    watch: {
+       '$store.state.course_edit': function(){
+            this.course_edit = this.$store.state.course_edit[0]
+            this.course_title = this.course_edit.title
+            this.course_cost = this.course_edit.cost
+            // this.course_thumbnail = this.course_edit.image
+            this.course_brief = this.course_edit.description
+            this.key_take_away = this.course_edit.summary
+            this.expiryperiod_type = this.course_edit.expiryperiod_type
+            this.expiry_period = this.course_edit.expiry_period
+            this.selected_instructors = this.course_edit.instructors
+            this.course_id = this.course_edit.id
+        }
+    },
      methods: {
         preview(){
+            this.course_brief = this.$refs.course_brief.value
             let courseData = {title:this.course_title, cost:this.course_cost, image:this.course_thumbnail, description:this.course_brief}
             this.$emit("previewCourse", courseData )
+
         },
      
        addTopic(){
         this.topic_count.length
        },   
+       upload(){
+        console.log(this.course_thumbnail);
+       },
         createCourse(){
             let instructors = []
             this.selected_instructors.map(instructor => {
@@ -106,22 +130,38 @@ export default{
                 formData.append('description', this.key_take_away)
                 formData.append('cost', this.course_cost)
                 formData.append('summary', this.course_brief)
-                formData.append('thumbnail', this.course_thumbnail[0].url);
+                formData.append('thumbnail','');
                 formData.append('expiryperiod_type', this.expiryperiod_type);
                 formData.append('expiry_period', this.expiry_period);
                 for (var i = 0; i < instructors.length; i++) {
                     formData.append('instructor_ids[]', instructors[i]);
                 }
-                Api.axios_instance.post(Api.baseUrl+'courses', formData)
-                .then((res) => {
+                console.log(formData);
+                if(this.$route.path === ('/course-upload')){
+                    Api.axios_instance.post(Api.baseUrl+'courses', formData)
+                    .then((res) => {
                     let course_id = res.data.data.id
                     localStorage.setItem('created_course_id', course_id)
                     this.$emit('courseCreated')
                     this.$toastr.s("Course Created Successfully");
-                })
-                .catch((err) => {
-                    console.log(err);
+                    })
+                    .catch((err) => {
+                        console.log(err);
                 });
+                } else{
+                    Api.axios_instance.put(Api.baseUrl+'courses/'+this.course_id, formData)
+                    .then((res) => {
+                    let course_id = res.data.data.id
+                    localStorage.setItem('created_course_id', course_id)
+                    this.$emit('courseCreated')
+                    this.$toastr.s("Course Update Successfully");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                });
+                }
+               
+               
             }
         },
     }

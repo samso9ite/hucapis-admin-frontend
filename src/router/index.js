@@ -45,9 +45,10 @@ const routes = [
     component: () => import('../views/CourseUpload.vue')
   },
   {
-    path: '/course-details',
+    path: '/course-details/:id',
     name: 'CourseDetails',
-    component: () => import('../views/CourseDetails.vue')
+    component: () => import('../views/CourseDetails.vue'),
+    props: true
   },
   {
     path: '/learners',
@@ -65,21 +66,36 @@ const routes = [
     component: () => import('../views/Courses.vue')
   },
   {
+    path: '/course-edit/:course_id',
+    name: 'CourseUpload',
+    component: () => import('../views/CourseUpload.vue'),
+    props: true
+  },
+  {
+    path: '/topic-edit/:course_id/:topic_id',
+    name: 'CourseUpload',
+    component: () => import('../views/CourseUpload.vue'),
+    props: true
+  },
+  {
     path: '/instructors',
     name: 'Instructors',
     component: () => import('../views/Instructors.vue')
   },
   {
-    path: '/tutors',
+    path: '/tutors/:id',
     name: 'Tutors',
-    component: () => import('../views/Tutors.vue')
+    component: () => import('../views/Tutors.vue'),
+    props: true
   }
  
 ]
 
 const router = new VueRouter({
   mode:'history',
-  routes
+  routes,
+  linkActiveClass:'activeClass',
+  linkExactActiveClass: "activeClass"
 })
 
 export default router

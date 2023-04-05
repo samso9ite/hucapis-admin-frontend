@@ -10,9 +10,11 @@
                     <div class="col-md-3" v-for="instructor in instructors" :key="instructor">
                         <div class="card" style="background-color: #fff; width: auto;" >
                             <img class="card-img-top" src="../../public/assets/admin/instructor_pics.svg" alt="Card image">
-                            <div class="card-body">
-                            <h5 class="card-title text-center" style="color: black; font-size: 15px;">{{instructor.name  }}</h5>
-                            </div>
+                            <router-link :to="'/tutors/'+instructor.id" class="routerLink">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center" style="color: black; font-size: 15px;">{{instructor.name  }}</h5>
+                                </div>
+                            </router-link>
                         </div>
                         <br>
                     </div>
@@ -37,18 +39,15 @@ export default {
             return this.$store.getters.instructors
         }
     },
-    data() {
-        return {
-            
-        }
-    },
-
-    methods: {
-       
-    },
-
-    mounted() {
-  
-    },
+    mounted(){
+        this.$store.dispatch('getInstructors')
+    }
 }
 </script>
+
+<style>
+.routerLink {
+  text-decoration: none !important;
+  color: inherit;
+}
+</style>
