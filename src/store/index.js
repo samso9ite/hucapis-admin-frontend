@@ -11,14 +11,24 @@ export default new Vuex.Store({
     user: null,
     token: null,
     all_instructors: [],
-    course_edit: {}
+    course_edit: {},
+    dashboardCount: {},
+    dashboardStatistics: {},
+    dashboardTopCourses: [],
+    dashboardLeaderboard: [],
+    revenueByMonth: {}
   },
   getters: {
     isAuthenticated: state => !!state.user,
     StateUser: state => state.user,
     token: state => state.token,
     instructors: state => state.all_instructors,
-    allCourses: state => state.all_courses
+    allCourses: state => state.all_courses,
+    headerStats: state => state.dashboardCount,
+    dashboardStatistics: state => state.dashboardStatistics,
+    dashboardTopCourses: state => state.dashboardTopCourses,
+    dashboardLeaderboard: state => state.dashboardLeaderboard,
+    revenueByMonth: state => state.revenueByMonth,
   },
   mutations: {
     setAllCourses(state, payload) {
@@ -40,6 +50,21 @@ export default new Vuex.Store({
     },
     courseEdit(state, payload){
       state.course_edit = payload
+    },
+    setDashboardCounts(state, payload) {
+      state.dashboardCount = payload
+    },
+    setDashboardStatistics(state, payload) {
+      state.dashboardStatistics = payload
+    },
+    setDashboardTopCourses(state, payload) {
+      state.dashboardTopCourses = payload
+    },
+    setDashboardLeaderboard(state, payload) {
+      state.dashboardLeaderboard = payload
+    },
+    setRevenueByMonth(state, payload) {
+      state.revenueByMonth = payload
     }
   },
   actions: {
@@ -64,6 +89,51 @@ export default new Vuex.Store({
     async AllCourses({ commit }) {
       Api.axios_instance.get(Api.baseUrl + "courses").then(res => {
         commit('setAllCourses', res.data.data.data)
+      });
+    },
+    async DashboardCount({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "dashboard/counts").then(res => {
+        const data = [{
+          heading: res.data.data.total_courses,
+          sub_heading: "Total Courses",
+          icon: "../../assets/admin/dashboard_money.svg",
+        },
+        {
+          heading: res.data.data.total_students,
+          sub_heading: "Total Students",
+          icon: "../../assets/admin/people.svg",
+        },
+        {
+          heading: res.data.data.total_tutors,
+          sub_heading: "Total Tutors",
+          icon: "../../assets/admin/visitors.svg",
+        },
+        {
+          heading: res.data.data.total_revenues,
+          sub_heading: "Total Revenue",
+          icon: "../../assets/admin/dashboard_money.svg",
+        },]
+        commit('setDashboardCounts', data)
+      });
+    },
+    async DashboardLeaderboard({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "dashboard/leader_board").then(res => {
+        commit('setDashboardLeaderboard', res.data.data)
+      });
+    },
+    async DashboardStatistics({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "dashboard/statistics").then(res => {
+        commit('setDashboardStatistics', res.data.data)
+      });
+    },
+    async DashboardTopCourses({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "dashboard/topCourses").then(res => {
+        commit('setDashboardTopCourses', res.data.data)
+      });
+    },
+    async RevenueByMonth({ commit }) {
+      Api.axios_instance.get(Api.baseUrl + "dashboard/revenue_by_month").then(res => {
+        commit('setRevenueByMonth', res.data.data)
       });
     },
   },

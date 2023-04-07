@@ -19,7 +19,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
-import Api from '../../../../hucapic_main_frontend/src/views/Api'
+import Api from '../../views/Api'
     export default{
         props: ["course"],
         computed: {

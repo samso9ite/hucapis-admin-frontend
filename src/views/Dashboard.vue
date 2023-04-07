@@ -1,0 +1,89 @@
+<template>
+  <div>
+    <SideNav />
+    <div class="main" style="">
+      <TopHeader />
+      <div
+        class="container"
+        style="margin: 2rem; margin-right: 2rem !important"
+      >
+        <div class="col-lg-12">
+          <div class="row" style="margin-right: 2rem">
+            <stat-card
+              :key="header_stat.sub_heading"
+              v-for="header_stat in header_stats"
+              :icon="header_stat.icon"
+              :heading="header_stat.heading"
+              :sub_heading="header_stat.sub_heading"
+            ></stat-card>
+          </div>
+
+          <!-- Top Courses Section -->
+          <div class="row">
+            <div class="col-lg-6 mt-5">
+              <p>Top Courses</p>
+
+              <course-horizontal
+                :key="course.id"
+                v-for="course in dashboardTopCourses"
+                :course="course"
+              ></course-horizontal>
+            </div>
+
+            <div class="col-lg-5 mt-5" style="margin-left: 3.5rem">
+              <p>Leaderboard</p>
+              <leader-board-item
+                :key="leader.name"
+                v-for="leader in dashboardLeaderboard"
+                :leader="leader"
+              ></leader-board-item>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import SideNav from "@/components/General/SideNav.vue";
+import TopHeader from "@/components/General/TopHeader.vue";
+import StatCard from "../components/General/StatCard.vue";
+import { mapGetters } from "vuex";
+import CourseHorizontal from "../components/General/CourseHorizontal.vue";
+import LeaderBoardItem from "../components/General/LeaderBoardItem.vue";
+
+export default {
+  name: "Dashboard",
+  components: {
+    TopHeader,
+    SideNav,
+    StatCard,
+    CourseHorizontal,
+    LeaderBoardItem,
+  },
+  computed: {
+    ...mapGetters({
+      header_stats: "headerStats",
+      dashboardStatistics: "dashboardStatistics",
+      dashboardTopCourses: "dashboardTopCourses",
+      dashboardLeaderboard: "dashboardLeaderboard",
+    }),
+  },
+  data() {
+    return {};
+  },
+  mounted() {
+    this.$store.dispatch("DashboardCount");
+    this.$store.dispatch("DashboardLeaderboard");
+    this.$store.dispatch("DashboardStatistics");
+    this.$store.dispatch("DashboardTopCourses");
+  },
+};
+</script>
+
+<style scoped>
+.card {
+  width: auto;
+}
+</style>
