@@ -16,7 +16,7 @@
         </div>
        
         <span class="mt-4">
-            <a @click="switchComponent('overview')" class="overview">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('revenue')" class="overview">Revenue</a> 
+            <a @click="switchComponent('overview')" class="overview">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('earnings')" class="overview">Earnings</a> 
       </span>
     
      
@@ -44,7 +44,7 @@
                 <div class="card" style="flex-direction: row;">
                     <img class="card-img-left" src="../../public/assets/admin/total_student.svg" alt="Card image" width="50">
                     <div class="" style="padding-left:1rem; padding-top:1rem ;">
-                    <h4 class="card-title"><b>$928,928,928</b></h4>
+                    <h4 class="card-title"><b>{{ students.length }}</b></h4>
                     <p>Total Students</p>
                     </div>
                 </div>
@@ -54,25 +54,19 @@
                 <div class="card" style="flex-direction: row;">
                     <img class="card-img-left" src="../../public/assets/admin/total_revenues.svg" alt="Card image" width="50">
                     <div class="" style="padding-left:1rem; padding-top:1rem ;">
-                    <h4 class="card-title"><b>$928,928,928</b></h4>
-                    <p> Total Revenues</p>
+                    <h4 class="card-title"><b>₦{{ total_earnings }}</b></h4>
+                    <p> Total Earnings</p>
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="col-lg-3">
-                <div class="card" style="
-                    flex-direction: row;">
-                    <img class="card-img-left" src="../assets/admin/dashboard_money.svg" alt="Card image" width="50">
-                    <div class="" style="padding-left:1rem; padding-top:1rem ;">
-                    <h4 class="card-title"><b>$928,928,928</b></h4>
-                    <p>Today’s sales</p>
-                    </div>
-                </div>
-            </div> -->
-   
+        </div>
+        <div class="row" style="margin-right: 2rem;" v-show="component === 'student'">
+                <LearnersComponent :students="students"/>
         </div>
 
+        <div class="row" style="margin-right: 2rem;" v-show="component === 'earnings'">
+                <Earnings :earnings="earnings"/>
+        </div>
 </div>
       </div>
 </div>
@@ -84,10 +78,12 @@ import SideNav from '@/components/General/SideNav.vue';
 import TopHeader from '@/components/General/TopHeader.vue';
 import Course from '@/components/General/Course.vue'
 import Api from './Api';
+import LearnersComponent from '@/components/LearnersComponent.vue';
+import Earnings from '@/components/Earnings.vue';
 
     export default{
         name: "Tutors",
-        components: {SideNav, TopHeader, Course},
+        components: {SideNav, TopHeader, Course, LearnersComponent, Earnings},
         data() {
             return {
                 instructor: '',
@@ -95,8 +91,9 @@ import Api from './Api';
                 activeComponent: '',
                 component: 'overview',
                 total_courses: '',
-                total_revenues: '',
-                total_student: '',
+                total_earnings: '',
+                students: '',
+                earnings: [],
                 id: ''
             }
         },
@@ -108,8 +105,16 @@ import Api from './Api';
                 this.instructor = instructor
                 this.courses = instructor[0].courses_i_instruct
                 
-                console.log(this.courses);
-                console.log(instructor);
+                Api.axios_instance.get(Api.baseUrl+'instructor/courses/'+this.id)
+                .then(res => {
+                    this.students = res.data.data.learners
+                })
+                Api.axios_instance.get(Api.baseUrl+'instructor/earnings/'+this.id)
+                .then(res => {
+                    this.total_earnings = res.data.data.total_earnings
+                    this.earnings = res.data.data.earnings
+
+                })
             },
             switchComponent(page){
                 this.component = page

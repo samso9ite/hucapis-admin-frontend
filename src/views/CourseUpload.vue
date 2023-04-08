@@ -6,15 +6,16 @@
         <TopHeader />
         <div class=" container-fluid" style="padding: 1.3rem;">
         <ul class="breadcrumb">
-            <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses</a></li>
+            <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Courses {{ mode }}</a></li>
             <li><a href="#">Course Information</a></li>
             <li class="active"><a href="#">Edit Course</a></li>
         </ul>
       <div class="col-lg-12" style="padding-left: 2rem;">
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
-             <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-if="mode === 'upload' || !created" :mode="mode" :course="course"/>
-             <CreateTopic v-show="created || mode === 'editTopic'" :mode="mode"/>
+             <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
+             <ShareFormula v-show="activeComponent === 'shareFormula'" @courseCreated="courseCreated" /> 
+             <CreateTopic v-show="activeComponent === 'topic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -46,14 +47,16 @@ import TopHeader from '@/components/General/TopHeader.vue';
 import Api from './Api';
 import CreateCourse from '../components/CreateCourse.vue';
 import CreateTopic from '../components/CreateTopic'
+import ShareFormula from '@/components/ShareFormula'
 import { mapGetters } from 'vuex';
 
 export default {
     name: "CourseUpload",
-    components: {TopHeader, SideNav, CreateCourse, CreateTopic},
+    components: {TopHeader, SideNav, CreateCourse, CreateTopic, ShareFormula},
    
     data() {
         return {
+            activeComponent: 'course',
             created: false,
             title: 'Course Title',
             description: 'Your course decription would be here ',
@@ -71,10 +74,11 @@ export default {
     },
 
     methods:{
-        courseCreated(){
-            this.created = true
+        courseCreated(status){
+            this.activeComponent = status
          },
         previewCourse(courseData){
+            console.log(courseData);
             this.title = courseData.title
             this.cost = courseData.cost
             this.image = courseData.image[0].url
@@ -91,10 +95,9 @@ export default {
         getRoute(){
             if (this.$route.path === ('/course-edit/'+this.id)) {
                 this.mode = 'editCourse'
-                    } else if (this.$route.path === ('/course-upload'))  {
-                    this.mode = 'upload'
-                } else{
-                    this.created = true
+                    // } else if (this.$route.path === ('/course-upload'))  {
+                    // this.mode = 'upload'
+                } else if(this.$route.path === ('/topic-edit/'+this.id)){
                     this.mode = "editTopic"
             }
         }

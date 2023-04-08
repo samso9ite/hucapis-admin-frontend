@@ -13,11 +13,11 @@
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Thumbnail</label>
                         <p>Lorem ipsum dolor sit amet consectetur.</p>
-                         <uploader v-model="course_thumbnail" :limit="1" @change="upload"  :autoUpload="false"></uploader>
+                         <uploader v-model="course_thumbnail" :limit="1"  :autoUpload="false"></uploader>
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Brief</label>
-                        <textarea rows="4" class="form-control" v-model="course_brief" ></textarea>
+                        <textarea rows="4" class="form-control" v-model="course_brief"   v-on:change="preview()"></textarea>
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Key Take Away</label>
@@ -52,7 +52,7 @@
                     </div>
                     
                     <span @click="createCourse" class="btn topic-btn mt-3">
-                       <span v-if="mode ===  'upload'">  Create Course </span> <span v-if="mode === 'editCourse'">Update Course </span>
+                     <span v-if="mode === 'editCourse'">Update Course </span> <span v-else>  Create Course </span>
                     </span>
                     
                 </form>
@@ -107,18 +107,13 @@ export default{
     },
      methods: {
         preview(){
-            this.course_brief = this.$refs.course_brief.value
             let courseData = {title:this.course_title, cost:this.course_cost, image:this.course_thumbnail, description:this.course_brief}
             this.$emit("previewCourse", courseData )
-
         },
      
        addTopic(){
         this.topic_count.length
-       },   
-       upload(){
-        console.log(this.course_thumbnail);
-       },
+       },  
         createCourse(){
             let instructors = []
             this.selected_instructors.map(instructor => {
@@ -136,13 +131,12 @@ export default{
                 for (var i = 0; i < instructors.length; i++) {
                     formData.append('instructor_ids[]', instructors[i]);
                 }
-                console.log(formData);
                 if(this.$route.path === ('/course-upload')){
                     Api.axios_instance.post(Api.baseUrl+'courses', formData)
                     .then((res) => {
                     let course_id = res.data.data.id
                     localStorage.setItem('created_course_id', course_id)
-                    this.$emit('courseCreated')
+                    this.$emit('courseCreated', "shareFormula")
                     this.$toastr.s("Course Created Successfully");
                     })
                     .catch((err) => {
@@ -154,7 +148,7 @@ export default{
                     let course_id = res.data.data.id
                     localStorage.setItem('created_course_id', course_id)
                     this.$emit('courseCreated')
-                    this.$toastr.s("Course Update Successfully");
+                    this.$toastr.s("Course Updated Successfully");
                     })
                     .catch((err) => {
                         console.log(err);
