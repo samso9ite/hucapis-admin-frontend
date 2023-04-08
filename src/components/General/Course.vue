@@ -10,7 +10,7 @@
             
             <span v-if="path === 'Courses'"> <img src="../../../public/assets/img/courses/floyd.svg" width="40px"/> {{ course.instructors[0].name }}</span><span style="float: right;">5 <i class="fa fa-star" aria-hidden="true" style="color: #FFA360;"></i> </span><br>
             <div class="div mt-4">
-                <span class="card-price"> ${{ course.cost }}</span> 
+                <span class="card-price"> ₦{{ course.cost }}</span> 
             </div>
          </div>
         </div>

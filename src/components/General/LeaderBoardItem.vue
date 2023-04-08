@@ -9,7 +9,7 @@
       <p class="">
         {{ leader.name }}
         <span style="float: right; padding-right: 2rem"
-          >₦{{ leader.incomes_sum_amount_recieved || 0.0 }}</span
+          >{{ $n(leader.incomes_sum_amount_recieved, 'currency', 'ng-NG') }}</span
         >
       </p>
       <!-- <p class="card-text" ></p> -->

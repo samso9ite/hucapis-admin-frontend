@@ -97,21 +97,25 @@ export default new Vuex.Store({
           heading: res.data.data.total_courses,
           sub_heading: "Total Courses",
           icon: "../../assets/admin/dashboard_money.svg",
+          currency: false,
         },
         {
           heading: res.data.data.total_students,
           sub_heading: "Total Students",
           icon: "../../assets/admin/people.svg",
+          currency: false,
         },
         {
           heading: res.data.data.total_tutors,
           sub_heading: "Total Tutors",
           icon: "../../assets/admin/visitors.svg",
+          currency: false,
         },
         {
           heading: res.data.data.total_revenues,
           sub_heading: "Total Revenue",
           icon: "../../assets/admin/dashboard_money.svg",
+          currency: true,
         },]
         commit('setDashboardCounts', data)
       });

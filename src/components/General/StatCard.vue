@@ -9,9 +9,10 @@
       />
       <div class="" style="padding-left: 1rem; padding-top: 1rem">
         <h4 class="card-title">
-          <b>₦{{ this.heading }}</b>
+          <b v-if="is_currency">{{ $n(heading, 'currency', 'ng-NG') }}</b>
+          <b v-else>{{ $n(heading) }}</b>
         </h4>
-        <p>{{ this.sub_heading }}</p>
+        <p>{{ sub_heading }}</p>
       </div>
     </div>
   </div>
@@ -21,7 +22,7 @@
 export default {
   name: "StatCard",
   components: {},
-  props: ["icon", "heading", "sub_heading"],
+  props: ["icon", "heading", "sub_heading", "is_currency"],
   data() {
     return {};
   },

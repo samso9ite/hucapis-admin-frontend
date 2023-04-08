@@ -21,7 +21,7 @@
         />
         {{ course.instructors[0].name }}
         <span style="float: right; padding-right: 2rem"
-          >₦{{ course.cost }}</span
+          >{{ $n(course.cost, "currency", "ng-NG") }}</span
         >
       </p>
     </div>

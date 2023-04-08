@@ -132,7 +132,7 @@ export default {
           sessionStorage.setItem("token", res.data.message.token);
           sessionStorage.setItem("phone", res.data.message.user.phone_number);
           sessionStorage.setItem("photo", res.data.message.user.photo);
-          this.$router.push("/courses");
+          this.$router.push("/dashboard");
           
         })
         .catch((error) => {

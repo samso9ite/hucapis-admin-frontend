@@ -15,6 +15,7 @@
               :icon="header_stat.icon"
               :heading="header_stat.heading"
               :sub_heading="header_stat.sub_heading"
+              :is_currency="header_stat.currency"
             ></stat-card>
           </div>
 
