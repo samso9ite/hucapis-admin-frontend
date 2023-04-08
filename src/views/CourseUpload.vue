@@ -78,6 +78,7 @@ export default {
             this.activeComponent = status
          },
         previewCourse(courseData){
+            console.log(courseData);
             this.title = courseData.title
             this.cost = courseData.cost
             this.image = courseData.image[0].url

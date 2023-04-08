@@ -13,11 +13,11 @@
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Thumbnail</label>
                         <p>Lorem ipsum dolor sit amet consectetur.</p>
-                         <uploader v-model="course_thumbnail" :limit="1" @change="upload"  :autoUpload="false"></uploader>
+                         <uploader v-model="course_thumbnail" :limit="1"  :autoUpload="false"></uploader>
                     </div>
                     <div class="mb-3">
                         <label for="pwd" class="form-label">Course Brief</label>
-                        <textarea rows="4" class="form-control" v-model="course_brief" ></textarea>
+                        <textarea rows="4" class="form-control" v-model="course_brief"   v-on:change="preview()"></textarea>
                     </div>
                     <div class="mb-3">
                         <label  class="form-label">Key Take Away</label>
@@ -107,18 +107,13 @@ export default{
     },
      methods: {
         preview(){
-            this.course_brief = this.$refs.course_brief.value
             let courseData = {title:this.course_title, cost:this.course_cost, image:this.course_thumbnail, description:this.course_brief}
             this.$emit("previewCourse", courseData )
-
         },
      
        addTopic(){
         this.topic_count.length
-       },   
-       upload(){
-        console.log(this.course_thumbnail);
-       },
+       },  
         createCourse(){
             let instructors = []
             this.selected_instructors.map(instructor => {
@@ -140,7 +135,6 @@ export default{
                     Api.axios_instance.post(Api.baseUrl+'courses', formData)
                     .then((res) => {
                     let course_id = res.data.data.id
-                    console.log(course_id);
                     localStorage.setItem('created_course_id', course_id)
                     this.$emit('courseCreated', "shareFormula")
                     this.$toastr.s("Course Created Successfully");
