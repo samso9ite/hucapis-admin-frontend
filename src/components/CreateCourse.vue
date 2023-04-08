@@ -52,7 +52,7 @@
                     </div>
                     
                     <span @click="createCourse" class="btn topic-btn mt-3">
-                       <span v-if="mode ===  'upload'">  Create Course </span> <span v-if="mode === 'editCourse'">Update Course </span>
+                     <span v-if="mode === 'editCourse'">Update Course </span> <span v-else>  Create Course </span>
                     </span>
                     
                 </form>
@@ -136,13 +136,13 @@ export default{
                 for (var i = 0; i < instructors.length; i++) {
                     formData.append('instructor_ids[]', instructors[i]);
                 }
-                console.log(formData);
                 if(this.$route.path === ('/course-upload')){
                     Api.axios_instance.post(Api.baseUrl+'courses', formData)
                     .then((res) => {
                     let course_id = res.data.data.id
+                    console.log(course_id);
                     localStorage.setItem('created_course_id', course_id)
-                    this.$emit('courseCreated')
+                    this.$emit('courseCreated', "shareFormula")
                     this.$toastr.s("Course Created Successfully");
                     })
                     .catch((err) => {
@@ -154,7 +154,7 @@ export default{
                     let course_id = res.data.data.id
                     localStorage.setItem('created_course_id', course_id)
                     this.$emit('courseCreated')
-                    this.$toastr.s("Course Update Successfully");
+                    this.$toastr.s("Course Updated Successfully");
                     })
                     .catch((err) => {
                         console.log(err);
