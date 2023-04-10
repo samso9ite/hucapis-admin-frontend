@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Signin',
+    name: 'Home',
     component: () => import('../views/auth/Signin.vue'),
     meta: {
       guest: true,
@@ -159,7 +159,7 @@ const routes = [
   },
   {
     path: '/course-edit/:course_id',
-    name: 'CourseUpload',
+    name: 'CourseEdit',
     component: () => import('../views/CourseUpload.vue'),
     props: true,
     meta: {
@@ -179,7 +179,7 @@ const routes = [
   },
   {
     path: '/topic-edit/:course_id/:topic_id',
-    name: 'CourseUpload',
+    name: 'Topic Edit',
     component: () => import('../views/CourseUpload.vue'),
     props: true,
     meta: {

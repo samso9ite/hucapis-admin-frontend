@@ -31,7 +31,7 @@ const numberFormats = {
 const i18n = new VueI18n({
   numberFormats
 })
-Vue.use(VueI18n)
+// Vue.use(VueI18n)
 
 new Vue({
   router,

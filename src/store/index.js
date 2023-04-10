@@ -29,6 +29,7 @@ export default new Vuex.Store({
     dashboardTopCourses: state => state.dashboardTopCourses,
     dashboardLeaderboard: state => state.dashboardLeaderboard,
     revenueByMonth: state => state.revenueByMonth,
+    chart_data: state => state.dashboardStatistics.chart_data
   },
   mutations: {
     setAllCourses(state, payload) {
