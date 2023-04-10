@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
-import Api from '../views/Api'; 
+import Api from '../views/Api';
 
 Vue.use(Vuex)
 
@@ -35,7 +35,7 @@ export default new Vuex.Store({
     setAllCourses(state, payload) {
       state.all_courses = payload
     },
-    getAllInstructors(state, payload){
+    getAllInstructors(state, payload) {
       state.all_instructors = payload
     },
     setUser(state, payload) {
@@ -49,7 +49,7 @@ export default new Vuex.Store({
       state.token = null
 
     },
-    courseEdit(state, payload){
+    courseEdit(state, payload) {
       state.course_edit = payload
     },
     setDashboardCounts(state, payload) {
@@ -80,16 +80,16 @@ export default new Vuex.Store({
       let user = null
       commit('LogOut', user)
     },
-    async getInstructors(context){
-      await Api.axios_instance.get(Api.baseUrl+'course_instructors')
-      .then(res => {
-        let payload = res.data.data
-        context.commit('getAllInstructors', payload)
-      })
+    async getInstructors(context) {
+      await Api.axios_instance.get(Api.baseUrl + 'course_instructors')
+        .then(res => {
+          let payload = res.data.data
+          context.commit('getAllInstructors', payload)
+        })
     },
-    async AllCourses({ commit }) {
-      Api.axios_instance.get(Api.baseUrl + "courses").then(res => {
-        commit('setAllCourses', res.data.data.data)
+    async AllCourses({ commit }, page = 1, per_page = 16) {
+      Api.axios_instance.get(Api.baseUrl + "courses" + "?page=" + page + "&per_page=" + per_page).then(res => {
+        commit('setAllCourses', res.data.data)
       });
     },
     async DashboardCount({ commit }) {

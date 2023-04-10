@@ -31,9 +31,17 @@
         >
         <div class="col-lg-12 mt-5">
           <div class="row">
-            <div class="col-md-4" v-for="course in allCourses" :key="course">
-              <Course :course="course" /><br />
+            <div class="col-md-3" v-for="course in allCourses.data" :key="course.id">
+              <Course  :course="course" /><br />
             </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <pagination 
+            :items="allCourses.data" 
+            @changePage="onChangePage" 
+            :maxPages="allCourses.last_page" 
+            :totalItems="allCourses.total"
+            :pageSize="allCourses.per_page"></pagination>
           </div>
         </div>
       </div>
@@ -44,19 +52,26 @@
 <script>
 import SideNav from "@/components/General/SideNav.vue";
 import TopHeader from "@/components/General/TopHeader.vue";
-import Api from "./Api";
 import Course from "../components/General/Course.vue";
 import { mapGetters } from "vuex";
+import Pagination from '../components/General/Pagination.vue';
 
 export default {
   name: "Courses",
   computed: { ...mapGetters({ allCourses: "allCourses" }) },
-  components: { SideNav, TopHeader, Course },
+  components: { SideNav, TopHeader, Course, Pagination },
   data() {
-    return {};
+    return {
+        per_page: 16,
+    };
   },
   mounted() {
-    this.$store.dispatch("AllCourses");
+    this.$store.dispatch("AllCourses", 1, this.per_page);
   },
+  methods: {
+    onChangePage(pageOfItems) {
+        this.$store.dispatch("AllCourses", pageOfItems.currentPage, this.per_page);
+    }
+  }
 };
 </script>

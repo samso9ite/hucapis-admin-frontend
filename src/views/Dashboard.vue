@@ -4,7 +4,7 @@
     <div class="main" style="">
       <TopHeader />
       <div
-        class="container"
+        class=""
         style="margin: 2rem; margin-right: 2rem !important"
       >
         <div class="col-lg-12">

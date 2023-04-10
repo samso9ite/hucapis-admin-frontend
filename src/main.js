@@ -8,9 +8,20 @@ import VueToastr from "vue-toastr";
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import VueI18n from 'vue-i18n'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
+// Import Bootstrap and BootstrapVue CSS files (order is important)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-Vue.use(VueSweetalert2).use(VueToastr).use(VueFileAgent)
+// register jw pagination component globally
+import JwPagination from 'jw-vue-pagination';
+Vue.component('jw-pagination', JwPagination);
+
+Vue.use(VueSweetalert2)
+.use(VueToastr)
+.use(VueFileAgent)
+.use(BootstrapVue)
 Vue.config.productionTip = false
 
 const numberFormats = {
