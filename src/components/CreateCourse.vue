@@ -121,6 +121,7 @@ export default {
 
   watch: {
     "$store.state.course_edit": function () {
+        console.log(this.$store.state.course_edit);
       this.course_edit = this.$store.state.course_edit[0];
       this.course_title = this.course_edit.title;
       this.course_cost = this.course_edit.cost;

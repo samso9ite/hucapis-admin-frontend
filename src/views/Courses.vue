@@ -36,12 +36,12 @@
             </div>
           </div>
           <div class="d-flex justify-content-end">
-            <pagination 
+            <Pagination 
             :items="allCourses.data" 
             @changePage="onChangePage" 
             :maxPages="allCourses.last_page" 
             :totalItems="allCourses.total"
-            :pageSize="allCourses.per_page"></pagination>
+            :pageSize="allCourses.per_page"></Pagination>
           </div>
         </div>
       </div>

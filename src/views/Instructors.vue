@@ -12,7 +12,7 @@
                             <img class="card-img-top" src="../../public/assets/admin/instructor_pics.svg" alt="Card image">
                             <router-link :to="'/tutors/'+instructor.id" class="routerLink">
                                 <div class="card-body">
-                                    <h5 class="card-title text-center" style="color: black; font-size: 15px;">{{instructor.name  }}</h5>
+                                    <h5 class="card-title text-center" style="color: black; font-size: 15px;">{{instructor.name | truncate(20) }}</h5>
                                 </div>
                             </router-link>
                         </div>

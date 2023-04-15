@@ -34,7 +34,7 @@
               <p>Top Courses</p>
               <course-horizontal
                 :key="course.id"
-                v-for="course in dashboardTopCourses"
+                v-for="course in dashboardTopCourses.slice(0,4)"
                 :course="course"
               ></course-horizontal>
             </div>
@@ -43,7 +43,7 @@
               <p>Leaderboard</p>
               <leader-board-item
                 :key="leader.name"
-                v-for="leader in dashboardLeaderboard"
+                v-for="leader in dashboardLeaderboard.slice(0, 6)"
                 :leader="leader"
               ></leader-board-item>
             </div>

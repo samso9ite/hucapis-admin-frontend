@@ -15,7 +15,7 @@
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
              <ShareFormula v-show="activeComponent === 'shareFormula'" @courseCreated="courseCreated" /> 
-             <CreateTopic v-show="activeComponent === 'topic'" :mode="mode"/>
+             <CreateTopic v-show="activeComponent === 'editTopic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -64,6 +64,7 @@ export default {
             cost: '0.0',
             mode: '',
             id: '',
+            topic_id: '',
             course: ''
         }
     },
@@ -76,9 +77,9 @@ export default {
     methods:{
         courseCreated(status){
             this.activeComponent = status
+            console.log(this.activeComponent);
          },
         previewCourse(courseData){
-            console.log(courseData);
             this.title = courseData.title
             this.cost = courseData.cost
             this.image = courseData.image[0].url
@@ -86,21 +87,25 @@ export default {
         },
         getId(){
             this.id = this.$route.params.course_id
+            this.topic_id = this.$route.params.topic_id
         },
         getCourse(){
-           let allCourses =  this.$store.getters.allCourses
+           let allCourses =  this.$store.getters.allCourses.data
+           console.log(allCourses);
            this.course = allCourses.filter(course => course.id == this.id)
            this.$store.commit('courseEdit', this.course)
         },
         getRoute(){
             if (this.$route.path === ('/course-edit/'+this.id)) {
                 this.mode = 'editCourse'
+                this.activeComponent = 'course'
                     // } else if (this.$route.path === ('/course-upload'))  {
                     // this.mode = 'upload'
-                } else if(this.$route.path === ('/topic-edit/'+this.id)){
+                } else if(this.$route.path === ('/topic-edit/'+this.id+'/'+this.topic_id)){
                     this.mode = "editTopic"
+                    this.activeComponent = 'editTopic'
             }
-        }
+         }
     },
 
     mounted(){
@@ -110,6 +115,7 @@ export default {
         if(this.mode == 'editCourse' ||  this.mode == 'editTopic'){
             this.getCourse()
         }
+      
         
     }
 }

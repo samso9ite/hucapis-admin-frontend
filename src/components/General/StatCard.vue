@@ -9,7 +9,7 @@
       />
       <div class="" style="padding-left: 1rem; padding-top: 1rem">
         <h4 class="card-title">
-          <b v-if="is_currency">{{ $n(heading, 'currency', 'ng-NG') }}</b>
+          <b v-if="is_currency">₦{{ $n(heading) }}</b>
           <b v-else>{{ $n(heading) }}</b>
         </h4>
         <p>{{ sub_heading }}</p>

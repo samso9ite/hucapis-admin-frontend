@@ -15,10 +15,10 @@
         <div class="row">
             <h5 style="color:#6B70EC; font-weight: 400; margin-bottom: 2rem;">{{ course.title }} <span style="float: right; cursor: pointer;" @click="deleteCourse"><button class="btn btn-danger" >Delete Course</button></span></h5> 
             <div class="col-lg-7">
-                <div class="" style="">
+                <div class="" style="background-color: black;">
                   
-                    <img class="card-img-top" src="../../public/assets/vid.svg" alt="Card image">
-                    <div class="card-img-overlay" style="color: white;"> <img src="../../public/assets/course_taken_play.svg" style=" margin-right:auto; margin-top: 27%; display:block"/> </div>
+                    <img class="card-img-top detail-img" :src=image_path() alt="Card image" >
+                    <div class="play-btn" style="color: white;" v-if="course.media.length > 0"> <img src="../../public/assets/course_taken_play.svg" width="70%" /> </div>
                 </div>
     
                 <ul class="nav nav-tabs" style="height: 2.7rem !important;">
@@ -37,38 +37,20 @@
                   </ul>
     
                   <p class="mt-4" style="font-size:20px; font-weight:400">COURSE BRIEF:</p>
-                  <p>{{ course.description }} </p>
+                  <p v-html="course.description"> </p>
                   <p class="mt-4" style="font-size:20px; font-weight:400">IN THIS COURSE, YOU WILL LEARN:</p>
                   <div class="row">
-                       <div class="col-lg-6">
-                      <ul class="list-unstyled">
-                          <li class="mb-2" style="padding-top: 1rem;">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
-                          </li>
-                          <li class="mb-2">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
-                          </li>
-                          <li class="mb-2">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
+                    <!-- <div class="col-lg-12"> -->
+                      <ul class="list-unstyled" style="column-count: 2;">
+                          <li class="mb-2 " style="padding-top: 1rem;" v-for="highlight in highlights" :key="highlight">
+                            
+                              <img src="../../public/assets/img/course_list_icon.svg" /> {{ highlight.highlight }}
                           </li>
                         
+                        
                       </ul>
-                  </div>
+                  <!-- </div> -->
     
-                  <div class="col-lg-6">
-                      <ul class="list-unstyled">
-                          <li class="mb-2" style="padding-top: 1rem;">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
-                          </li>
-                          <li class="mb-2">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
-                          </li>
-                          <li class="mb-2">
-                              <img src="../../public/assets/img/course_list_icon.svg" /> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lectus at eu, tell.
-                          </li>
-                         
-                      </ul>
-                  </div>
                  <router-link :to="'/course-edit/'+course.id"> <button class="btn" style="background-color:#6B70EC">Edit Course</button> </router-link>
                 
             </div>
@@ -124,21 +106,29 @@ import Api from './Api';
                 this.id = this.$route.params.id
                 Api.axios_instance.get(Api.baseUrl+'courses/'+this.id)
                 .then(res => {
+                    console.log(res);
                 this.course = res.data.data
                 this.topics = res.data.data.topics
                 this.highlights = res.data.data.highlights
                 })
             },
             deleteCourse(){
-                console.log("esdrfgyhjk");
                 Api.axios_instance.delete(Api.baseUrl+('courses/')+this.id)
                 .then(res => {
-                    this.$toastr.s("Course Deleted Successfully");
-                    window.location.href('/courses')
+                    this.$toastr.Add({
+                        msg: "Course Deleted Successfully", // Toast Message
+                        position: "toast-top-right", // Toast Position.
+                        type: "success", // Toast type,
+                        preventDuplicates: true, //Default is false,
+                        style: { backgroundColor: "green" } // bind inline style to toast  (check [Vue doc](https://vuejs.org/v2/guide/class-and-style.html#Binding-Inline-Styles) for more examples)
+                    });
+                    this.$router.push('/courses')
                 }).catch(err => {
-                    console.log(err);
                     this.$toastr.e("err");
                 })
+            },
+            image_path() {
+                return this.course.media && this.course.media.length > 0 ? `https://hucaplms.king.name.ng/public/storage/${this.course.media[0].id}/${this.course.media[0].file_name}` : '../assets/vid.svg'
             }
         },  
 
@@ -147,3 +137,15 @@ import Api from './Api';
         }
     }
 </script>
+
+<style scoped>
+.detail-img{
+    height: 50vh;
+    opacity: 0.4;
+}
+.play-btn{
+    position: absolute; top: 20%; left: 45%;
+    cursor: pointer;
+    
+}
+</style>

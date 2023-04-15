@@ -2,7 +2,7 @@
   <router-link :to="'/course-details/' + course.id" class="routerLink">
     <div class="card" style="background-color: #fff">
       <img
-        class="card-img-top"
+        class="card-img-top cardImgSize"
         :src="image_path()"
         alt="Course thumbnail"
       />
@@ -16,9 +16,9 @@
 
       <div class="card-body">
         <h5 class="card-title text-uppercase">
-          {{ course.title }} {{ current_path }}
+          {{ course.title | truncate(15) }} 
         </h5>
-        <p class="card-text" v-html="course.description"></p>
+        <p class="card-text" :inner-html.prop="course.description | truncate(50)"></p>
 
         <span v-if="current_path === 'Courses'">
           <img
@@ -78,9 +78,20 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .routerLink {
   text-decoration: none !important;
   color: inherit;
+}
+
+.card{
+  width: auto;
+  height: 70vh;
+}
+
+.cardImgSize{
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
 }
 </style>

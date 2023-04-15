@@ -9,6 +9,7 @@ import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import VueI18n from 'vue-i18n'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import VueTruncate from 'vue-truncate-filter'
 
 // Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
@@ -22,6 +23,7 @@ Vue.use(VueSweetalert2)
 .use(VueToastr)
 .use(VueFileAgent)
 .use(BootstrapVue)
+.use(VueTruncate)
 Vue.config.productionTip = false
 
 const numberFormats = {

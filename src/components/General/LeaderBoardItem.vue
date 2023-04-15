@@ -5,7 +5,7 @@
       src="assets/admin/avatar1.svg"
       :alt="leader.name"
     />
-    <div class="card-body mt-3" style="padding-left: 3rem">
+    <div class="card-body mt-2" style="padding-left: 3rem">
       <p class="">
         {{ leader.name }}
         <span style="float: right; padding-right: 2rem"
