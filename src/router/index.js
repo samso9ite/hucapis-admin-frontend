@@ -235,7 +235,22 @@ const routes = [
         }
       ]
     }
-  }
+  },
+  {
+    path: '/add-testimonial',
+    name: 'AddTestimonial',
+    component: () => import('../views/AddTestimonial.vue')
+  },
+  {
+    path: '/update-testimonial/:id',
+    name: 'AddTestimonial',
+    component: () => import('../views/AddTestimonial.vue')
+  },
+  {
+    path: '/testimonials',
+    name: 'Testimonials',
+    component: () => import('../views/Testimonials.vue')
+  },
 
 ]
 

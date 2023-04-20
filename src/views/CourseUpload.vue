@@ -102,7 +102,6 @@ export default {
         getCourse(){
            let allCourses =  this.$store.getters.allCourses.data
            this.course = allCourses.filter(course => course.id == this.id)
-           console.log(this.course);
            this.cost = this.course[0].cost
            this.title = this.course[0].title
            this.description = this.course[0].summary
@@ -110,7 +109,6 @@ export default {
            let image = this.course[0].media
            if(image.length > 0){
             this.image =  `https://hucaplms.king.name.ng/public/storage/${this.course[0].media[0].id}/${this.course[0].media[0].file_name}`
-            console.log(this.image);
            }else{
             this.image = 'https://designshack.net/wp-content/uploads/placeholder-image.png'
            }
@@ -120,8 +118,6 @@ export default {
             if (this.$route.path === ('/course-edit/'+this.id)) {
                 this.mode = 'editCourse'
                 this.activeComponent = 'course'
-                    // } else if (this.$route.path === ('/course-upload'))  {
-                    // this.mode = 'upload'
                 } else if(this.$route.path === ('/topic-edit/'+this.id+'/'+this.topic_id)){
                     this.mode = "editTopic"
                     this.activeComponent = 'editTopic'
