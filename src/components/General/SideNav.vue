@@ -6,6 +6,7 @@
         <router-link :to="'/learners'"><img src="../../../public/assets/admin/learners_icon.svg"/> Learners</router-link>
         <router-link :to="'/courses'"><img src="../../../public/assets/admin/course_icon.svg"/> Courses</router-link>
         <router-link :to="'/revenue'"><img src="../../../public/assets/admin/revenue.svg"/> Revenue</router-link>
+        <router-link :to="'/testimonials'"><img src="../../../public/assets/admin/revenue.svg"/> Testimonials </router-link>
     </div>
 </template>
 

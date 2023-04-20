@@ -1,4 +1,20 @@
 <template>
+      <div>
+        <SideNav />
+        <div class="main" style="">
+        <TopHeader />
+        <div class=" container-fluid" style="padding: 1.3rem;">
+        <ul class="breadcrumb">
+            <li><a href="#"><img src="../../public/assets/admin/breadcrumb_home.svg" style="padding-right:10px ;"/> Home</a></li>
+            <li class="active"><a href="#"> Testimonials</a></li>
+        </ul>
+        <div class="col-lg-12" style="padding-left: 2rem;">
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </template>
 
 <script>
