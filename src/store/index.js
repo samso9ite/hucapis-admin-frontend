@@ -16,7 +16,8 @@ export default new Vuex.Store({
     dashboardStatistics: {},
     dashboardTopCourses: [],
     dashboardLeaderboard: [],
-    revenueByMonth: {}
+    revenueByMonth: {},
+    allCategory: []
   },
   getters: {
     isAuthenticated: state => !!state.user,
@@ -29,7 +30,8 @@ export default new Vuex.Store({
     dashboardTopCourses: state => state.dashboardTopCourses,
     dashboardLeaderboard: state => state.dashboardLeaderboard,
     revenueByMonth: state => state.revenueByMonth,
-    chart_data: state => state.dashboardStatistics.chart_data
+    chart_data: state => state.dashboardStatistics.chart_data,
+    allCategory: state => state.allCategory
   },
   mutations: {
     setAllCourses(state, payload) {
@@ -66,6 +68,9 @@ export default new Vuex.Store({
     },
     setRevenueByMonth(state, payload) {
       state.revenueByMonth = payload
+    },
+    setCategories(state, payload){
+      state.allCategory = payload
     }
   },
   actions: {
@@ -140,6 +145,13 @@ export default new Vuex.Store({
       Api.axios_instance.get(Api.baseUrl + "dashboard/revenue_by_month").then(res => {
         commit('setRevenueByMonth', res.data.data)
       });
+    },
+    async getCategories(context){
+      await Api.axios_instance.get(Api.baseUrl+'interests')
+      .then(res => {
+        console.log(res);
+        context.commit('setCategories', res.data.data)
+      })
     },
   },
   modules: {

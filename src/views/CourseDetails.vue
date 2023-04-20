@@ -37,7 +37,7 @@
                   </ul>
     
                   <p class="mt-4" style="font-size:20px; font-weight:400">COURSE BRIEF:</p>
-                  <p v-html="course.description"> </p>
+                  <p v-html="course.summary"> </p>
                   <p class="mt-4" style="font-size:20px; font-weight:400">IN THIS COURSE, YOU WILL LEARN:</p>
                   <div class="row">
                     <!-- <div class="col-lg-12"> -->
@@ -62,7 +62,7 @@
                     <div class="accordion-item">
                       <p class="accordion-header" id="panelsStayOpen-headingOne">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                          <span style="text-transform: capitalize !important;"> Course Content</span> <span style="font-size:12px"> - 5 topics . 20mins </span>
+                          <span style="text-transform: capitalize !important;"> Course Content</span> <span style="font-size:12px"></span>
                         </button>
                     </p>
                       <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
@@ -90,6 +90,7 @@
 import SideNav from '../components/General/SideNav.vue'
 import TopHeader from '../components/General/TopHeader.vue'
 import Api from './Api';
+
     export default{
         name: "CourseDetails",
         components: {SideNav, TopHeader},
@@ -101,12 +102,26 @@ import Api from './Api';
                 topics: []
             }
         },
+        watch: { 
+            "$store.state.course_edit": function () {
+            this.course_edit = this.$store.state.course_edit[0];
+            this.course_title = this.course_edit.title;
+            this.course_cost = this.course_edit.cost;
+            this.course_brief = this.course_edit.summary;
+            this.key_take_away = this.course_edit.description;
+            this.expiryperiod_type = this.course_edit.expiryperiod_type;
+            this.expiry_period = this.course_edit.expiry_period;
+            this.selected_instructors = this.course_edit.instructors;
+            this.selected_categories = this.course_edit.interests
+            this.course_id = this.course_edit.id;
+            }
+        },
+
         methods: {
             setDetails(){
                 this.id = this.$route.params.id
                 Api.axios_instance.get(Api.baseUrl+'courses/'+this.id)
                 .then(res => {
-                    console.log(res);
                 this.course = res.data.data
                 this.topics = res.data.data.topics
                 this.highlights = res.data.data.highlights
@@ -134,8 +149,8 @@ import Api from './Api';
 
         mounted(){
             this.setDetails()
+            }
         }
-    }
 </script>
 
 <style scoped>

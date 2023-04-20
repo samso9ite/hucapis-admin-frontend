@@ -15,7 +15,7 @@
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
              <ShareFormula v-show="activeComponent === 'shareFormula'" @courseCreated="courseCreated" /> 
-             <CreateTopic v-show="activeComponent === 'editTopic'" :mode="mode"/>
+             <CreateTopic v-show="activeComponent === 'editTopic' || activeComponent === 'topic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -26,7 +26,16 @@
                     <div class="card-body">
                     <h5 class="card-title text-uppercase">{{ title }}</h5>
                     <p class="card-text">{{ description }}</p>
-                   <span> <img src="../../public/assets/img/courses/floyd.svg" width="40px"/> Floyd Miles</span><span style="float: right;">5 <i class="fa fa-star" aria-hidden="true" style="color: #FFA360;"></i> </span><br>
+                    <div class="row">
+                         <div class="col-lg-9"  v-for="instructor in instructors" :key="instructor">
+                            <img src="../../public/assets/img/courses/floyd.svg" width="40px" class="mb-2"/> {{ instructor.name | truncate(20)}}
+                    </div>
+                    <div class="col-lg-3">
+                        <span style="float: right;">5 <i class="fa fa-star" aria-hidden="true" style="color: #FFA360;"></i> </span>
+                    </div>
+                    </div>
+                   
+                    <br>
                     <div class="div mt-4">
                     <span class="card-price"> ${{ cost }}</span> 
                     </div>
@@ -65,7 +74,8 @@ export default {
             mode: '',
             id: '',
             topic_id: '',
-            course: ''
+            course: '',
+            instructors: []
         }
     },
     computed:{
@@ -91,8 +101,19 @@ export default {
         },
         getCourse(){
            let allCourses =  this.$store.getters.allCourses.data
-           console.log(allCourses);
            this.course = allCourses.filter(course => course.id == this.id)
+           console.log(this.course);
+           this.cost = this.course[0].cost
+           this.title = this.course[0].title
+           this.description = this.course[0].summary
+           this.instructors = this.course[0].instructors
+           let image = this.course[0].media
+           if(image.length > 0){
+            this.image =  `https://hucaplms.king.name.ng/public/storage/${this.course[0].media[0].id}/${this.course[0].media[0].file_name}`
+            console.log(this.image);
+           }else{
+            this.image = 'https://designshack.net/wp-content/uploads/placeholder-image.png'
+           }
            this.$store.commit('courseEdit', this.course)
         },
         getRoute(){
@@ -109,7 +130,9 @@ export default {
     },
 
     mounted(){
+        this.$store.dispatch('getCategories')
         this.$store.dispatch('getInstructors')
+       
         this.getId()
         this.getRoute()
         if(this.mode == 'editCourse' ||  this.mode == 'editTopic'){

@@ -1,8 +1,8 @@
 <template>
     <div class="row">
-        <div class="col-lg-12">
+        <!-- <div class="col-lg-12">
             <span style="font-weight: 400;">TOPICS </span> <span style="float: right;">  <span @click="addTopic" class="btn topic-btn">Add More Topic</span></span>
-        </div>
+        </div> -->
         <div>
             <!-- <div v-for="(topic, index) in topics" :key="index" class="mb-3">
                 <p class="mb-3">Topic {{ index }}</p> -->
@@ -12,18 +12,7 @@
                 <label for="pwd" class="form-label mt-4">Description</label>
                 <textarea class="form-control" rows="3"  v-model="description" /> 
                 <div class="mb-3">
-                    <!-- <VueFileAgent
-                        ref="vueFileAgent"
-                        :theme="'list'"
-                        :multiple="true"
-                        :deletable="true"
-                        :meta="true"
-                        :maxFiles="2"
-                        @change="handleFileUpload"
-                    
-                        v-model="resource">
-                    </VueFileAgent> -->
-                <label for="pwd" class="form-label mt-4">Upload Video</label>
+                 <label for="pwd" class="form-label mt-4">Upload Video</label>
                     <input type="file" accept="" @change="handleFileUpload" ref="vid" />
                 </div>
 
@@ -93,6 +82,7 @@ export default{
                         this.resource = '',
                         this.description = '',
                         this.title = ''
+                        this.$refs.vid = ''
                         this.$toastr.s("Topic Created Successfully");
                     })
                    
@@ -103,9 +93,7 @@ export default{
                     title: this.title,
                     description: this.description,
                     course_id: this.course_id,
-                    resource: 'https://legacy.reactjs.org/docs/hooks-effect.html'
                 }
-                console.log(this.topic_id);
                 Api.axios_instance.put(Api.baseUrl+'topics/'+this.topic_id, formData)
                 .then(async res => {
                     console.log(res);

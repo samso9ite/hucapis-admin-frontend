@@ -18,5 +18,6 @@ import {mapGetters} from 'vuex'
         },
         computed: {...mapGetters({allCourses:"allCourses"})},
 
+
     }
 </script>

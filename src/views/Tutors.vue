@@ -16,11 +16,11 @@
         </div>
        
         <span class="mt-4">
-            <a @click="switchComponent('overview')" class="overview">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('earnings')" class="overview">Earnings</a> 
+            <a @click="switchComponent('overview')" class="overview" :class="component=='overview' ? activeClass : none">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('earnings')" class="overview">Earnings</a> 
       </span>
     
      
-    </div>
+    </div>  
     <div class="col-lg-12 mt-5">
    
         <div class="row" v-show="component === 'courses'">
@@ -61,11 +61,13 @@
             </div>
         </div>
         <div class="row" style="margin-right: 2rem;" v-show="component === 'student'">
-                <LearnersComponent :students="students"/>
+                <LearnersComponent  v-if="students.length > 0" :students="students"/>
+                <span v-else> No student record!</span>
         </div>
 
         <div class="row" style="margin-right: 2rem;" v-show="component === 'earnings'">
-                <Earnings :earnings="earnings"/>
+                <Earnings v-if="earnings.length > 0" :earnings="earnings"/>
+                <span v-else> No earnings for now!</span>
         </div>
 </div>
       </div>
@@ -138,5 +140,8 @@ import Earnings from '@/components/Earnings.vue';
 .overview{
     padding-right: 2rem; text-decoration: none; color: black;
     cursor: pointer;
+}
+.activeClass{
+    color: #6a71ec;
 }
 </style>

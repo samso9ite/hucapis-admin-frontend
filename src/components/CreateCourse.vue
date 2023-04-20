@@ -65,6 +65,20 @@
       </div>
 
       <div class="mb-3">
+        <label for="pwd" class="form-label">Select Categories</label>
+        <multiselect
+          :multiple="true"
+          v-model="selected_categories"
+          :clear-on-select="true"
+          :searchable="true"
+          :options="categories"
+          label="name"
+          :valueProp="id"
+          track-by="id"
+        >
+        </multiselect>
+      </div>
+      <div class="mb-3">
         <label for="pwd" class="form-label">Select Instructors</label>
         <multiselect
           :multiple="true"
@@ -96,7 +110,7 @@ import Multiselect from "vue-multiselect";
 
 export default {
   components: { VueEditor, Uploader, Multiselect },
-  computed: { ...mapGetters({ instructors: "instructors" }) },
+  computed: { ...mapGetters({ instructors: "instructors", categories:"allCategory" }) },
   props: ["mode", "course"],
   data() {
     return {
@@ -114,6 +128,7 @@ export default {
       expiryperiod_type: "Year",
       expiry_period: "",
       selected_instructors: [],
+      selected_categories: [],
       course_edit: {},
       course_id: "",
     };
@@ -121,16 +136,15 @@ export default {
 
   watch: {
     "$store.state.course_edit": function () {
-        console.log(this.$store.state.course_edit);
       this.course_edit = this.$store.state.course_edit[0];
       this.course_title = this.course_edit.title;
       this.course_cost = this.course_edit.cost;
-      // this.course_thumbnail = this.course_edit.image
-      this.course_brief = this.course_edit.description;
-      this.key_take_away = this.course_edit.summary;
+      this.course_brief = this.course_edit.summary;
+      this.key_take_away = this.course_edit.description;
       this.expiryperiod_type = this.course_edit.expiryperiod_type;
       this.expiry_period = this.course_edit.expiry_period;
       this.selected_instructors = this.course_edit.instructors;
+      this.selected_categories = this.course_edit.interests
       this.course_id = this.course_edit.id;
     },
   },
@@ -154,9 +168,13 @@ export default {
         let id = instructor.id.toString();
         instructors.push(id);
       });
+      let categories = [];
+      this.selected_categories.map((category) => {
+        let id = category.id.toString();
+        categories.push(id)
+       
+      })
       const formData = new FormData();
-
-      console.log( this.course_thumbnail[0]);
       formData.append("title", this.course_title);
       formData.append("description", this.key_take_away);
       formData.append("cost", this.course_cost);
@@ -164,8 +182,13 @@ export default {
       formData.append("thumbnail", this.course_thumbnail[0].blob);
       formData.append("expiryperiod_type", this.expiryperiod_type);
       formData.append("expiry_period", this.expiry_period);
+    
       for (var i = 0; i < instructors.length; i++) {
         formData.append("instructor_ids[]", instructors[i]);
+      }
+
+      for(var i = 0; i < categories.length; i++) {
+        formData.append("interest_ids[]", categories[i])
       }
       if (this.$route.path === "/course-upload") {
         Api.axios_instance
@@ -181,7 +204,7 @@ export default {
           });
       } else {
         Api.axios_instance
-          .put(Api.baseUrl + "courses/" + this.course_id, formData, { headers: { "Content-Type": "multipart/form-data", "Accept": "application/json"}})
+          .post(Api.baseUrl + "courses/edit/" + this.course_id, formData, { headers: { "Content-Type": "multipart/form-data", "Accept": "application/json"}})
           .then((res) => {
             let course_id = res.data.data.id;
             localStorage.setItem("created_course_id", course_id);

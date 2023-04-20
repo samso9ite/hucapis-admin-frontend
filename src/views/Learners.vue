@@ -4,52 +4,19 @@
         <div class="main" style="">
         <TopHeader />
         <div class=" container-fluid" style="padding: 1.3rem;">
-       <h6 class="mb-4" style="color:#6B70EC; font-size:20px; font-weight: 400;">LEARNERS (30,000)</h6>
-        
-        <table class="table learners" style="background-color: #fff;">
-            <tbody>
-                <tr>
-                    <td>NAME <img src="../../public/assets/admin/caret.svg" width="20"/></td>
-                    <td>EMAIL  <img src="../../public/assets/admin/caret.svg" width="20"/></td>
-                    <td>PHONE NUMBBER  <img src="../../public/assets/admin/caret.svg" width="20"/></td>
-                    <td>COUNTRY  <img src="../../public/assets/admin/caret.svg" width="20"/></td>
-                    <td>NO. OF COURSES  <img src="../../public/assets/admin/caret.svg" width="20"/></td>
-                  </tr>
-              <tr>
-                <td>John Samson</td>
-                <td>john@example.com</td>
-                <td>08112417083</td>
-                <td>Russia</td>
-                <td>67</td>
-              </tr>
+            <h6 class="mb-4" style="color:#6B70EC; font-size:20px; font-weight: 400;">LEARNERS</h6>
+            <LearnersComponent   v-if="learners.data.length > 0" :students="learners.data" />
+            <p v-else> No learners on the platform yet!</p>
 
-              <tr>
-                <td>John Samson</td>
-                <td>john@example.com</td>
-                <td>08112417083</td>
-                <td>Russia</td>
-                <td>67</td>
-              </tr>
-
-              <tr>
-                <td>John Samson</td>
-                <td>john@example.com</td>
-                <td>08112417083</td>
-                <td>Russia</td>
-                <td>67</td>
-              </tr>
-
-              <tr>
-                <td>John Samson</td>
-                <td>john@example.com</td>
-                <td>08112417083</td>
-                <td>Russia</td>
-                <td>67</td>
-              </tr>
-             
-            </tbody>
-          </table>
-    </div>
+            <Pagination 
+            :items="learners.data" 
+            @changePage="getLearners" 
+            :maxPages="learners.last_page" 
+            :totalItems="learners.total"
+            :pageSize="learners.per_page"></Pagination>
+          </div>
+        <!-- </div> -->
+     
     </div>
 </div>
 </template>
@@ -58,12 +25,30 @@
 import TopHeader from '@/components/General/TopHeader.vue';
 import SideNav from '@/components/General/SideNav.vue';
 import Api from './Api';
+import LearnersComponent from '@/components/LearnersComponent.vue';
+import Pagination from '../components/General/Pagination.vue';
 
     export default{
         name: "Learners",
-        components: {TopHeader, SideNav},
+        components: {TopHeader, SideNav, LearnersComponent, Pagination},
         data(){
+            return{
+                learners: [],
+            }
+        },
 
+        methods: {
+            getLearners(){
+                let page = 1; let per_page = 25
+                Api.axios_instance.get(Api.baseUrl + "all_learners" + "?page=" + page + "&per_page=" + per_page).then(res => {
+                       this.learners = res.data.data
+                    });
+                },
+            },
+        
+
+        mounted(){
+            this.getLearners()   
         }
     }
 </script>

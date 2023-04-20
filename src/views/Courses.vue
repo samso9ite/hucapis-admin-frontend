@@ -5,23 +5,8 @@
       <TopHeader />
       <div class="container-fluid" style="padding: 1.3rem">
         <span>
-          <a href="" style="padding-right: 2rem">Category 1</a>
-          <a
-            href=""
-            style="padding-right: 2rem; text-decoration: none; color: black"
-            >Category 2</a
-          >
-          <a
-            href=""
-            style="padding-right: 2rem; text-decoration: none; color: black"
-            >Category 3</a
-          >
-          <a
-            href=""
-            style="padding-right: 2rem; text-decoration: none; color: black"
-            >Category 4</a
-          >
-        </span>
+        Categories:  <a  style="padding-right: 2rem; text-decoration: none; color: black; cursor:pointer" v-for="category in categories.slice(0,8)" :key="category" @click="filterByCategory(category.id)">{{ category.name }}</a>
+         </span>
         <span style="float: right"
           ><router-link :to="'/course-upload'">
             <div type="button" class="btn" style="background-color: #ffa360">
@@ -55,10 +40,11 @@ import TopHeader from "@/components/General/TopHeader.vue";
 import Course from "../components/General/Course.vue";
 import { mapGetters } from "vuex";
 import Pagination from '../components/General/Pagination.vue';
+import Api from './Api';
 
 export default {
   name: "Courses",
-  computed: { ...mapGetters({ allCourses: "allCourses" }) },
+  computed: { ...mapGetters({ allCourses: "allCourses", categories:"allCategory" }) },
   components: { SideNav, TopHeader, Course, Pagination },
   data() {
     return {
@@ -71,6 +57,14 @@ export default {
   methods: {
     onChangePage(pageOfItems) {
         this.$store.dispatch("AllCourses", pageOfItems.currentPage, this.per_page);
+    },
+    filterByCategory(id){
+      console.log(id);
+        Api.axios_instance.get(Api.baseUrl+'courses?category_id'+id)
+        .then(res => {
+          console.log(res);
+          // this.$store.commit()
+        })
     }
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/course-details/' + course.id" class="routerLink">
+  <a :href="'/course-details/' + course.id" class="routerLink">
     <div class="card" style="background-color: #fff">
       <img
         class="card-img-top cardImgSize"
@@ -18,7 +18,7 @@
         <h5 class="card-title text-uppercase">
           {{ course.title | truncate(15) }} 
         </h5>
-        <p class="card-text" :inner-html.prop="course.description | truncate(50)"></p>
+        <p class="card-text" :inner-html.prop="course.summary | truncate(50)"></p>
 
         <span v-if="current_path === 'Courses'">
           <img
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-  </router-link>
+  </a>
 </template>
 
 <script>
