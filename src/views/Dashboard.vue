@@ -48,6 +48,7 @@
                 :leader="leader"
               ></leader-board-item>
             </div>
+            
           </div>
         </div>
       </div>

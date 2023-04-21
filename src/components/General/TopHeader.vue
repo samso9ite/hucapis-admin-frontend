@@ -48,8 +48,6 @@
                 :text="`Hi! ${user.name} `"
               >
                 <b-dropdown-item>Profile</b-dropdown-item>
-                <b-dropdown-item>Courses</b-dropdown-item>
-                <b-dropdown-item>Settings</b-dropdown-item>
                 <b-dropdown-item
                   ><span @click="logout">Logout</span></b-dropdown-item
                 >

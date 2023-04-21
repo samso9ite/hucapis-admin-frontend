@@ -127,11 +127,13 @@ export default {
         .post(Api.baseUrl + "auth/login", formData)
         .then(async (res) => {
 
-          sessionStorage.setItem("name", res.data.message.user.name);
-          sessionStorage.setItem("email", res.data.message.user.email);
+          // sessionStorage.setItem("name", res.data.message.user.name);
+          // sessionStorage.setItem("email", res.data.message.user.email);
           sessionStorage.setItem("token", res.data.message.token);
-          sessionStorage.setItem("phone", res.data.message.user.phone_number);
-          sessionStorage.setItem("photo", res.data.message.user.photo);
+          // sessionStorage.setItem("phone", res.data.message.user.phone_number);
+          // sessionStorage.setItem("photo", res.data.message.user.photo);
+          await this.LogIn(res.data.message.user);
+          await this.SetToken(res.data.message.token);
           this.$router.push("/dashboard");
           
         })
