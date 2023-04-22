@@ -10,7 +10,24 @@
         </ul>
         <div class="col-lg-12" style="padding-left: 2rem;">
             <div class="row">
+             
+                <div class="card col-lg-3" v-for="testimony in testimonials" :key="testimony" style="margin-right:5px">
+                    <router-link :to="'update-testimonial/'+testimony.id" style="text-decoration:none; color:black">
+                    <div class=" d-flex flex-column justify-content-center">
+                        <blockquote class="blockquote ">
+                            <p>"{{  testimony.testimony}}"</p>
+                        </blockquote>
+                        <div class="author d-flex align-items-center">
+                        <img class="avatar rounded-circle mx-2" src='' v-if="testimony.media.length > 0">
+                        <img class="avatar rounded-circle mx-2" src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' v-else>
+                            {{ testimony.name }} 
+                        </div>
+                    <!-- <div class="row"> <a class="mt-3" href="https://goo">Edit</a> <a href="" class="text-danger">Delete</a></div> -->
+                    </div>
+                    </router-link>
             </div>
+
+        </div>
         </div>
     </div>
 </div>
@@ -38,6 +55,9 @@ import Api from './Api';
                     console.log(res);
                     this.testimonials = res.data.data
                 })
+            },
+            image_path() {
+                return this.testimony.media && this.testimony.media.length > 0 ? `https://hucaplms.king.name.ng/public/storage/${this.testimony.media[0].id}/${this.testimony.media[0].file_name}` : 'https://img.freepik.com/free-icon/user_318-159711.jpg'
             }
         },
         mounted() {
@@ -45,3 +65,10 @@ import Api from './Api';
         },
     }
 </script>
+
+<style scoped>
+.avatar {
+  border: 0.1rem solid rgba(#fff, 0.3);
+  max-width: 3rem;
+}
+</style>
