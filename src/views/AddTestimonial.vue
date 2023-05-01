@@ -83,7 +83,6 @@ import Api from './Api';
                 formData.append('thumbnail', this.image)
                 Api.axios_instance.post(Api.baseUrl+'testimonials/store', formData)
                 .then(res => {
-                    console.log(res);
                     this.$toastr.Add({
                         msg: "Testimonial Added Successfully",
                         position: "toast-top-right",
@@ -113,7 +112,6 @@ import Api from './Api';
                 formData.append('thumbnail', this.image)
                 Api.axios_instance.post(Api.baseUrl+'testimonials/update/'+this.id, formData)
                 .then(res => {
-                    console.log(res);
                     this.$toastr.Add({
                         msg: "Testimonial Updated Successfully",
                         position: "toast-top-right",
@@ -135,7 +133,7 @@ import Api from './Api';
                 })
             },
             deleteTestimonial(){
-                Api.axios_instance.delete(Api.baseUrl+'testimonials/'+this.id)
+                Api.axios_instance.delete(Api.baseUrl+'testimonials/delete/'+this.id)
                 .then(res => {
                     this.$toastr.Add({
                         msg: "Testimonial Deleted Successfully",
@@ -144,6 +142,7 @@ import Api from './Api';
                         preventDuplicates: true,
                         style: { backgroundColor: "green" } 
                     });
+                    this.$router.push('/testimonials')
                 })
             },
             getRoute(){

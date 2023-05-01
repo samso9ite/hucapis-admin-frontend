@@ -18,8 +18,8 @@
                             <p>"{{  testimony.testimony}}"</p>
                         </blockquote>
                         <div class="author d-flex align-items-center">
-                        <img class="avatar rounded-circle mx-2" src='' v-if="testimony.media.length > 0">
-                        <img class="avatar rounded-circle mx-2" src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' v-else>
+                        <img class="avatar rounded-circle mx-2" :src=image_path(testimony)>
+                        <!-- <img class="avatar rounded-circle mx-2" src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' v-else> -->
                             {{ testimony.name }} 
                         </div>
                     <!-- <div class="row"> <a class="mt-3" href="https://goo">Edit</a> <a href="" class="text-danger">Delete</a></div> -->
@@ -44,7 +44,8 @@ import Api from './Api';
         components: {SideNav, TopHeader},
         data() {
             return {
-                testimonials: []
+                testimonials: [],
+
             }
         },
 
@@ -52,12 +53,11 @@ import Api from './Api';
             getTestimonials(){
                 Api.axios_instance.get(Api.baseUrl+'testimonials')
                 .then(res => {
-                    console.log(res);
                     this.testimonials = res.data.data
                 })
             },
-            image_path() {
-                return this.testimony.media && this.testimony.media.length > 0 ? `https://hucaplms.king.name.ng/public/storage/${this.testimony.media[0].id}/${this.testimony.media[0].file_name}` : 'https://img.freepik.com/free-icon/user_318-159711.jpg'
+            image_path(testimony) {
+                return testimony.media && testimony.media.length > 0 ? `https://hucaplms.king.name.ng/public/storage/${testimony.media[0].id}/${testimony.media[0].file_name}` : 'https://img.freepik.com/free-icon/user_318-159711.jpg'
             }
         },
         mounted() {

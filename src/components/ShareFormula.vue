@@ -48,8 +48,17 @@ export default{
             submitShares(){
                 Api.axios_instance.post(Api.baseUrl+('courses/'+this.course_id+'/sharing_formula'), { sharingFormulas:this.shares})
                 .then(res => {
-                    this.$toastr.s("Sharing Created Successfully");
-                    this.$emit('courseCreated', "topic")
+                    this.$toastr.Add({
+                        msg: "Forumla Created Successfully",
+                        position: "toast-top-right",
+                        type: "success", 
+                        preventDuplicates: true,
+                        style: { backgroundColor: "green" } 
+                        });
+                    if(this.$route.path === ( '/course-upload/')){
+                        this.$emit('courseCreated', "topic") 
+                    }
+                   
                 })
                 .catch(err => {
                     console.log(err);

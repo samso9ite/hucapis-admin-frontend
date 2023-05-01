@@ -1,13 +1,7 @@
 <template>
     <div class="row">
-        <!-- <div class="col-lg-12">
-            <span style="font-weight: 400;">TOPICS </span> <span style="float: right;">  <span @click="addTopic" class="btn topic-btn">Add More Topic</span></span>
-        </div> -->
-        <div>
-            <!-- <div v-for="(topic, index) in topics" :key="index" class="mb-3">
-                <p class="mb-3">Topic {{ index }}</p> -->
+       <div>
                 <label for="pwd" class="form-label">Topic name </label>
-                
                 <input type="text" class="form-control" v-model="title">
                 <label for="pwd" class="form-label mt-4">Description</label>
                 <textarea class="form-control" rows="3"  v-model="description" /> 
@@ -97,19 +91,6 @@ export default{
                 Api.axios_instance.put(Api.baseUrl+'topics/'+this.topic_id, formData)
                 .then(async res => {
                     console.log(res);
-                    // this.topic_id = res.data.data.id
-                    // const vidData = new FormData()
-                    // vidData.append('resources', this.resource)
-                    // vidData.append('topic_id', this.topic_id)
-                    // await Api.axios_instance.post(Api.baseUrl+'add_resource_to_topic', vidData)
-                    // .then(res => {
-                    //     this.topic_id = '',
-                    //     this.resource = '',
-                    //     this.description = '',
-                    //     this.title = ''
-                    //     this.$toastr.s("Topic Created Successfully");
-                    // })
-                   
                 })
             }
         }

@@ -14,8 +14,8 @@
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
-             <ShareFormula v-show="activeComponent === 'shareFormula'" @courseCreated="courseCreated" /> 
-             <CreateTopic v-show="activeComponent === 'editTopic' || activeComponent === 'topic'" :mode="mode"/>
+             <ShareFormula v-show="activeComponent === 'shareFormula' || 'editFormula'" @courseCreated="courseCreated" /> 
+             <CreateTopic v-show="activeComponent === 'editTopic' || activeComponent === 'topic' || activeComponent == 'addTopic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
         <div class="col-lg-5">
@@ -87,7 +87,6 @@ export default {
     methods:{
         courseCreated(status){
             this.activeComponent = status
-            console.log(this.activeComponent);
          },
         previewCourse(courseData){
             this.title = courseData.title
@@ -121,6 +120,14 @@ export default {
                 } else if(this.$route.path === ('/topic-edit/'+this.id+'/'+this.topic_id)){
                     this.mode = "editTopic"
                     this.activeComponent = 'editTopic'
+            } else if(this.$route.path === ( '/add-topic/'+this.id)){
+                this.mode = "addTopic"
+                this.activeComponent = 'addTopic'
+                localStorage.setItem("created_course_id", this.id);
+            } else if(this.$route.path === ( '/edit-formula/'+this.id)){
+                this.mode = "editFormula"
+                this.activeComponent = 'editFormula'
+                localStorage.setItem("created_course_id", this.id);
             }
          }
     },
@@ -128,10 +135,9 @@ export default {
     mounted(){
         this.$store.dispatch('getCategories')
         this.$store.dispatch('getInstructors')
-       
         this.getId()
         this.getRoute()
-        if(this.mode == 'editCourse' ||  this.mode == 'editTopic'){
+        if(this.mode == 'editCourse' ||  this.mode == 'editTopic' || this.mode == 'addTopic' || this.mode == 'editFormula'){
             this.getCourse()
         }
       

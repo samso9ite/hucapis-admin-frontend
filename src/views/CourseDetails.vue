@@ -50,8 +50,18 @@
                         
                       </ul>
                   <!-- </div> -->
-    
-                 <router-link :to="'/course-edit/'+course.id"> <button class="btn" style="background-color:#6B70EC">Edit Course</button> </router-link>
+                  <div class="col-lg-12">
+                     <div class="row" >
+                        <div class="col-lg-6 col-6">
+                            <router-link :to="'/course-edit/'+course.id"> <button class="btn" style="background-color:#6B70EC; color: white;">Edit Course</button> </router-link> 
+                        </div>
+                        <div class="col-lg-6 col-6" style="float:right">
+                            <router-link :to="'/edit-formula/'+course.id"> <button class="btn" style="background-color:#6B70EC; color: white;">Edit Share Formular</button> </router-link> 
+                        </div>
+                </div>
+                  </div>
+               
+                
                 
             </div>
             </div>
@@ -73,10 +83,10 @@
                                   
                                 </li>
                             </ul>
+                           <router-link :to="'/add-topic/'+id"> <button class="btn" style="background-color:#6B70EC; color:white">Add Topic</button> </router-link>
                         </div>
                       </div>
                     </div>
-            
                   </div>
             </div>
         </div>

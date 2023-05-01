@@ -12,7 +12,7 @@
       
       <div class="row mt-4">
         <div class="col-lg-12">
-            <img src="../../public/assets/adminNew/instructor_pic.svg" height="50px"  style="padding-right: 1rem"/> {{ instructor[0].name }} <span style="float: right;"><button class="btn btn-danger">Delete Profile</button></span>
+            <img src="../../public/assets/adminNew/instructor_pic.svg" height="50px"  style="padding-right: 1rem"/> {{ instructor[0].name }}
         </div>
        
         <span class="mt-4">

@@ -198,6 +198,46 @@ const routes = [
     }
   },
   {
+    path: '/add-topic/:course_id',
+    name: 'Add Topic',
+    component: () => import('../views/CourseUpload.vue'),
+    props: true,
+    meta: {
+      guest: false,
+      title: 'Add Course Topic - Hucapis LMS',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'Hucapic Learning Management Platform - Add Course Topic.'
+        },
+        {
+          property: 'og:description',
+          content: 'Hucapic Learning Management Platform - Add Course Topic.'
+        }
+      ]
+    }
+  },
+  {
+    path: '/edit-formula/:course_id',
+    name: 'Edit Formula',
+    component: () => import('../views/CourseUpload.vue'),
+    props: true,
+    meta: {
+      guest: false,
+      title: 'Edit Share Formular - Hucapis LMS',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'Hucapic Learning Management Platform - Edit Share Formular.'
+        },
+        {
+          property: 'og:description',
+          content: 'Hucapic Learning Management Platform - Edit Share Formular.'
+        }
+      ]
+    }
+  },
+  {
     path: '/instructors',
     name: 'Instructors',
     component: () => import('../views/Instructors.vue'),

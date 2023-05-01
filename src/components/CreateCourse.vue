@@ -197,7 +197,13 @@ export default {
             let course_id = res.data.data.id;
             localStorage.setItem("created_course_id", course_id);
             this.$emit("courseCreated", "shareFormula");
-            this.$toastr.s("Course Created Successfully");
+            this.$toastr.Add({
+              msg: "Course Created Successfully",
+              position: "toast-top-right",
+              type: "success", 
+              preventDuplicates: true,
+              style: { backgroundColor: "green" } 
+            });
           })
           .catch((err) => {
             console.log(err);
@@ -209,7 +215,13 @@ export default {
             let course_id = res.data.data.id;
             localStorage.setItem("created_course_id", course_id);
             this.$emit("courseCreated");
-            this.$toastr.s("Course Updated Successfully");
+            this.$toastr.Add({
+                msg: "Course Updated Successfully",
+                position: "toast-top-right",
+                type: "success", 
+                preventDuplicates: true,
+                style: { backgroundColor: "green" } 
+            });
           })
           .catch((err) => {
             console.log(err);
