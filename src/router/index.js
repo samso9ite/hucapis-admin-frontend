@@ -277,6 +277,26 @@ const routes = [
     }
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
+    props: true,
+    meta: {
+      guest: false,
+      title: 'User Profile - Hucapis LMS',
+      metaTags: [
+        {
+          name: 'description',
+          content: 'Hucapic Learning Management Platform - User Profile.'
+        },
+        {
+          property: 'og:description',
+          content: 'Hucapic Learning Management Platform - User Profile.'
+        }
+      ]
+    }
+  },
+  {
     path: '/add-testimonial',
     name: 'AddTestimonial',
     component: () => import('../views/AddTestimonial.vue')

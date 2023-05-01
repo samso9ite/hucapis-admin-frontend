@@ -27,11 +27,11 @@
                     <h5 class="card-title text-uppercase">{{ title }}</h5>
                     <p class="card-text">{{ description }}</p>
                     <div class="row">
-                         <div class="col-lg-9"  v-for="instructor in instructors" :key="instructor">
-                            <img src="../../public/assets/img/courses/floyd.svg" width="40px" class="mb-2"/> {{ instructor.name | truncate(20)}}
+                        <div class="col-lg-9"  v-for="instructor in instructors" :key="instructor">
+                        <img src="../../public/assets/img/courses/floyd.svg" width="40px" class="mb-2"/> {{ instructor.name | truncate(20)}}
                     </div>
                     <div class="col-lg-3">
-                        <span style="float: right;">5 <i class="fa fa-star" aria-hidden="true" style="color: #FFA360;"></i> </span>
+                        <span style="float: right;">5 <i class="fa fa-star" aria-hidden="true" style="color: #FFA360;"> </i> </span>
                     </div>
                     </div>
                    
@@ -113,6 +113,12 @@ export default {
            }
            this.$store.commit('courseEdit', this.course)
         },
+        getFormula(){
+            Api.axios_instance.get(Api.baseUrl+'courses/'+this.id+'/sharing_formula')
+            .then(res => {
+                console.log(res);
+            })
+        },
         getRoute(){
             if (this.$route.path === ('/course-edit/'+this.id)) {
                 this.mode = 'editCourse'
@@ -137,6 +143,9 @@ export default {
         this.$store.dispatch('getInstructors')
         this.getId()
         this.getRoute()
+        if(this.mode == 'editFormula'){
+            this.getFormula()
+        }
         if(this.mode == 'editCourse' ||  this.mode == 'editTopic' || this.mode == 'addTopic' || this.mode == 'editFormula'){
             this.getCourse()
         }

@@ -25,7 +25,7 @@ import {mapGetters} from 'vuex'
 
 export default{
         computed: {...mapGetters({instructors:"instructors"})},
-        props: ["mode"],
+        props: ["mode"],    
         watch: {
             '$store.state.course_edit': function(){
                
@@ -36,14 +36,33 @@ export default{
                 course_id: localStorage.getItem('created_course_id'),
                 users : [],
                 share: '',
-                shares: [{user_id: '', share: ''}]
+                shares: [{user_id: '', share: ''}],
+                sum: 0
             }
         },
         
         
         methods: {
+            sumShares(){
+                this.shares.map(item => {
+                    this.sum += parseFloat(item.share)
+                })
+                console.log(this.su);
+             },
             addShare(){
-                this.shares.push({user_id: '', share: ''})
+                this.sumShares()
+                if(this.sum >= 100){
+                    this.$toastr.Add({
+                        msg: "100% Limit Reached",
+                        position: "toast-top-right",
+                        type: "error", 
+                        preventDuplicates: true,
+                        style: { backgroundColor: "red" } 
+                        });
+                }else{
+                    this.shares.push({user_id: '', share: ''})
+                }
+                      
             },
             submitShares(){
                 Api.axios_instance.post(Api.baseUrl+('courses/'+this.course_id+'/sharing_formula'), { sharingFormulas:this.shares})

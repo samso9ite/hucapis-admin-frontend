@@ -40,16 +40,12 @@
                   <p v-html="course.summary"> </p>
                   <p class="mt-4" style="font-size:20px; font-weight:400">IN THIS COURSE, YOU WILL LEARN:</p>
                   <div class="row">
-                    <!-- <div class="col-lg-12"> -->
                       <ul class="list-unstyled" style="column-count: 2;">
                           <li class="mb-2 " style="padding-top: 1rem;" v-for="highlight in highlights" :key="highlight">
                             
                               <img src="../../public/assets/img/course_list_icon.svg" /> {{ highlight.highlight }}
                           </li>
-                        
-                        
                       </ul>
-                  <!-- </div> -->
                   <div class="col-lg-12">
                      <div class="row" >
                         <div class="col-lg-6 col-6">

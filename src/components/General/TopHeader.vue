@@ -18,11 +18,12 @@
       <div class="collapse navbar-collapse row">
         <div class="col-lg-6">
           <div class="input-group">
-            <!-- <button class="btn btn-primary" type="submit" style="margin-right: -3rem; background-color: transparent; border: none;"> <i class="fa fa-search"></i> Search</button> -->
             <input
               type="text"
               class="form-control"
-              placeholder="Search courses, tutors, sponsors..."
+              placeholder="Search courses ..."
+              @change="searchCourses()"
+              v-model="search_text"
               style="border: 1px solid #b3b3b3"
             />
           </div>
@@ -47,7 +48,7 @@
                 id="dropdown-1"
                 :text="`Hi! ${user.name} `"
               >
-                <b-dropdown-item>Profile</b-dropdown-item>
+                <b-dropdown-item><router-link :to="'/profile'">Profile </router-link></b-dropdown-item>
                 <b-dropdown-item
                   ><span @click="logout">Logout</span></b-dropdown-item
                 >
@@ -64,7 +65,9 @@
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return {};
+    return {
+      search_text: ''
+    };
   },
   computed: {
     ...mapGetters({
@@ -79,6 +82,9 @@ export default {
       this.$store.dispatch("LogOut");
       this.$router.push("/sign-in");
     },
+    searchCourses(){
+
+    }
   },
 };
 </script>

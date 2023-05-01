@@ -1,6 +1,6 @@
 <template>
     <div class="sidenav">
-        <router-link :to="'/dashboard'"><img src="../../../public/assets/admin/Qoeko-white-icon.png" height="60px" style="margin-bottom: 2rem;"/> </router-link>
+        <a :href="'/dashboard'"><img src="../../../public/assets/admin/Qoeko-white-icon.png" height="60px" style="margin-bottom: 2rem;"/> </a>
         <router-link :to="'/dashboard'"><img src="../../../public/assets/admin/home_icon.svg"/> Home </router-link>
         <router-link :to="'/instructors'"><img src="../../../public/assets/admin/tutors_icon.svg"/> Tutors</router-link>
         <router-link :to="'/learners'"><img src="../../../public/assets/admin/learners_icon.svg"/> Learners</router-link>

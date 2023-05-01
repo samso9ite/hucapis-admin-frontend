@@ -149,7 +149,6 @@ export default new Vuex.Store({
     async getCategories(context){
       await Api.axios_instance.get(Api.baseUrl+'interests')
       .then(res => {
-        console.log(res);
         context.commit('setCategories', res.data.data)
       })
     },
