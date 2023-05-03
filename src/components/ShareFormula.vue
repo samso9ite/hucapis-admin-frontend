@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-lg-12">
-            <span style="font-weight: 400;">Sharing Formula </span> <span style="float: right;">  <span @click="addShare" class="btn topic-btn">Add More User</span></span>
+            <span style="font-weight: 400;">Sharing Formula {{ mode }} </span> <span style="float: right;">  <span @click="addShare" class="btn topic-btn">Add More User</span></span>
         </div>
         <div v-for="(shareFormula, index) in shares" :key="index" class="mb-3">
             <label for="pwd" class="form-label"> User</label>
@@ -12,7 +12,8 @@
             <label class="form-label"> Share Percentage</label>
             <input type="number" class="form-control" v-model="shareFormula.share">
         </div>
-        <span @click="submitShares" class="btn topic-btn">Submit Shares</span>
+        <!-- <span @click="updateShares" class="btn topic-btn" v-if="mode === 'editFormula'">Update Shares</span> -->
+        <span @click="submitShares" class="btn topic-btn" >Submit Shares</span>
     </div>
  
 </template>
@@ -25,10 +26,11 @@ import {mapGetters} from 'vuex'
 
 export default{
         computed: {...mapGetters({instructors:"instructors"})},
-        props: ["mode"],    
+        props: ["mode", "formular"],    
         watch: {
-            '$store.state.course_edit': function(){
-               
+            '$store.state.share_formular': function(){
+               console.log(this.$store.state.share_formular);
+               this.shares = this.$store.state.share_formular
         }
     },
         data(){
@@ -44,14 +46,16 @@ export default{
         
         methods: {
             sumShares(){
+                this.sum = 0
                 this.shares.map(item => {
                     this.sum += parseFloat(item.share)
                 })
-                console.log(this.su);
-             },
+                console.log(this.sum);
+            },
+
             addShare(){
                 this.sumShares()
-                if(this.sum >= 100){
+                if(this.sum >= 101){
                     this.$toastr.Add({
                         msg: "100% Limit Reached",
                         position: "toast-top-right",
@@ -65,24 +69,39 @@ export default{
                       
             },
             submitShares(){
-                Api.axios_instance.post(Api.baseUrl+('courses/'+this.course_id+'/sharing_formula'), { sharingFormulas:this.shares})
-                .then(res => {
+                this.sumShares()
+                if(this.sum >= 101){
                     this.$toastr.Add({
-                        msg: "Forumla Created Successfully",
+                        msg: "100% Limit Reached",
                         position: "toast-top-right",
-                        type: "success", 
+                        type: "error", 
                         preventDuplicates: true,
-                        style: { backgroundColor: "green" } 
-                        });
-                    if(this.$route.path === ( '/course-upload/')){
-                        this.$emit('courseCreated', "topic") 
-                    }
-                   
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-            }
+                        style: { backgroundColor: "red" } 
+                    });
+                }else{
+                    Api.axios_instance.post(Api.baseUrl+('courses/'+this.course_id+'/sharing_formula'), { sharingFormulas:this.shares})
+                    .then(res => {
+                        this.sum = 0
+                        this.$toastr.Add({
+                            msg: "Forumla Created Successfully",
+                            position: "toast-top-right",
+                            type: "success", 
+                            preventDuplicates: true,
+                            style: { backgroundColor: "green" } 
+                            });
+                        this.$emit('getFormula')
+                        
+                        if(this.$route.path === ( '/course-upload/')){
+                            this.$emit('courseCreated', "topic") 
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                }
+            },
+
+           
         }
     }
     

@@ -91,6 +91,13 @@ export default{
                 Api.axios_instance.put(Api.baseUrl+'topics/'+this.topic_id, formData)
                 .then(async res => {
                     console.log(res);
+                    this.$toastr.Add({
+                        msg: "Updated Topic Successfully",
+                        position: "toast-top-right",
+                        type: "success", 
+                        preventDuplicates: true,
+                        style: { backgroundColor: "green" } 
+                        });
                 })
             }
         }

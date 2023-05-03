@@ -10,8 +10,8 @@
           <div class="row">
               <div class="col-lg-3">
                   <a href="#" class="btn" style="background-color:#D9D9D9; padding:0.5rem 4rem"><img src="../../public/assets/img/profile.svg" width="18px"/> Profile</a> <br>
-                  <a href="#" class="btn mt-3" style=" padding:0.5rem 4rem"> <img src="../../public/assets/img/pricing.svg" width="18px"/> Pricing</a>
-                  <a href="#" class="btn mt-3" style=" padding:0.5rem 4rem"> <img src="../../public/assets/img/notification.svg" width="18px"/> Notifications </a>
+                  <!-- <a href="#" class="btn mt-3" style=" padding:0.5rem 4rem"> <img src="../../public/assets/img/pricing.svg" width="18px"/> Pricing</a> -->
+                  <!-- <a href="#" class="btn mt-3" style=" padding:0.5rem 4rem"> <img src="../../public/assets/img/notification.svg" width="18px"/> Notifications </a> -->
               </div>
               <div class="col-lg-9 mb-5" style="padding-left: 5rem;border-left: 1px solid #c8c9ca;">
                   <img src="../../public/assets/img/photo.svg"/> <input type="file"  ref="profile_pic" @change="handleFileUpload"/>

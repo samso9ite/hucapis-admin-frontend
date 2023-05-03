@@ -14,7 +14,7 @@
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
-             <ShareFormula v-show="activeComponent === 'shareFormula' || 'editFormula'" @courseCreated="courseCreated" /> 
+             <ShareFormula v-show="activeComponent === 'shareFormula' || 'editFormula'" @courseCreated="courseCreated" :formular="formular" @getFormula="getFormula" :mode="mode"/> 
              <CreateTopic v-show="activeComponent === 'editTopic' || activeComponent === 'topic' || activeComponent == 'addTopic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>
@@ -75,7 +75,8 @@ export default {
             id: '',
             topic_id: '',
             course: '',
-            instructors: []
+            instructors: [],
+            formular: []
         }
     },
     computed:{
@@ -116,7 +117,8 @@ export default {
         getFormula(){
             Api.axios_instance.get(Api.baseUrl+'courses/'+this.id+'/sharing_formula')
             .then(res => {
-                console.log(res);
+                this.formular = res.data.data
+                this.$store.commit('setFormular', res.data.data)
             })
         },
         getRoute(){
