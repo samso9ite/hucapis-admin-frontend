@@ -38,8 +38,8 @@ import Pagination from '../components/General/Pagination.vue';
         },
 
         methods: {
-            getLearners(){
-                let page = 1; let per_page = 25
+            getLearners(pageOfItems){
+                let page = pageOfItems; let per_page = 25
                 Api.axios_instance.get(Api.baseUrl + "all_learners" + "?page=" + page + "&per_page=" + per_page).then(res => {
                        this.learners = res.data.data
                     });

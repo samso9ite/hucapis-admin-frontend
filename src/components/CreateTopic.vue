@@ -39,7 +39,7 @@ export default{
         data(){
             return{
                 resources: [],
-                resource: '',
+                resource: [],
                 topic_id: '',
                 title: '',
                 course_id: localStorage.getItem('created_course_id'),
@@ -57,6 +57,7 @@ export default{
             },
             handleFileUpload(){
                 this.resource = this.$refs.vid.files[0]
+                console.log(this.resource);
             },
             submitTopic(){
                 let formData = {
@@ -68,14 +69,14 @@ export default{
                 .then(async res => {
                     this.topic_id = res.data.data.id
                     const vidData = new FormData()
-                    vidData.append('resources', this.resource)
+                    vidData.append('resources[]', this.resource)
                     vidData.append('topic_id', this.topic_id)
                     await Api.axios_instance.post(Api.baseUrl+'add_resource_to_topic', vidData)
                     .then(res => {
                         this.topic_id = '',
                         this.resource = '',
                         this.description = '',
-                        this.title = ''
+                        this.title = '' 
                         this.$refs.vid = ''
                         this.$toastr.s("Topic Created Successfully");
                     })

@@ -139,12 +139,13 @@ export default {
         updateProfile(){
             this.loading = true
             const formData = new FormData();
-            formData.append("name", this.first_name);
-            formData.append("last_name", this.last_name);
-            formData.append("username", this.username);
-            formData.append("email", this.email);
-            formData.append("phone_number", this.phone_number);
-            formData.append("photo", this.profile_pic);
+            formData.append("name", this.first_name)
+            formData.append("last_name", this.last_name)
+            formData.append("username", this.username)
+            formData.append("email", this.email)
+            formData.append("phone_number", this.phone_number)
+            formData.append("email_notification", 1)
+            formData.append("photo", this.profile_pic)
 
             Api.axios_instance.post(Api.baseUrl+'profile/update', formData)
             .then(res => {

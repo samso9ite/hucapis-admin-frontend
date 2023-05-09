@@ -18,7 +18,8 @@ export default new Vuex.Store({
     dashboardLeaderboard: [],
     revenueByMonth: {},
     allCategory: [],
-    share_formular: []
+    share_formular: [],
+   
   },
   getters: {
     isAuthenticated: state => !!state.user,
@@ -33,7 +34,8 @@ export default new Vuex.Store({
     revenueByMonth: state => state.revenueByMonth,
     chart_data: state => state.dashboardStatistics.chart_data,
     allCategory: state => state.allCategory,
-    formular: state => state.share_formular
+    formular: state => state.share_formular,
+   
   },
   mutations: {
     setAllCourses(state, payload) {
@@ -76,7 +78,8 @@ export default new Vuex.Store({
     },
     setFormular(state, payload){
       state.share_formular = payload
-    }
+    },
+  
   },
   actions: {
     async LogIn({ commit }, user) {

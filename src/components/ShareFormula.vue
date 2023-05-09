@@ -91,7 +91,7 @@ export default{
                             });
                         this.$emit('getFormula')
                         
-                        if(this.$route.path === ( '/course-upload/')){
+                        if(this.$route.path === ( '/course-upload')){
                             this.$emit('courseCreated', "topic") 
                         }
                     })

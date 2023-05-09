@@ -14,7 +14,7 @@
         <div class="row">
         <div class="col-lg-6" style="background-color: #fff; padding: 1rem;">
              <CreateCourse @courseCreated="courseCreated" @previewCourse="previewCourse" v-show="activeComponent === 'course'" :mode="mode" :course="course"/>
-             <ShareFormula v-show="activeComponent === 'shareFormula' || 'editFormula'" @courseCreated="courseCreated" :formular="formular" @getFormula="getFormula" :mode="mode"/> 
+             <ShareFormula v-show="activeComponent === 'shareFormula' || activeComponent === 'editFormula'" @courseCreated="courseCreated" :formular="formular" @getFormula="getFormula" :mode="mode"/> 
              <CreateTopic v-show="activeComponent === 'editTopic' || activeComponent === 'topic' || activeComponent == 'addTopic'" :mode="mode"/>
         </div>
         <div class="col-lg-1"></div>

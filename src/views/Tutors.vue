@@ -16,7 +16,10 @@
         </div>
        
         <span class="mt-4">
-            <a @click="switchComponent('overview')" class="overview" :class="component=='overview' ? activeClass : none">Overview</a> <a @click="switchComponent('student')" class="overview">Students </a>  <a @click="switchComponent('courses')" class="overview">Courses </a>  <a @click="switchComponent('earnings')" class="overview">Earnings</a> 
+            <a @click="switchComponent('overview')" class="overview" :class="component === 'overview' ? 'activeClass' : 'notActive'">Overview</a>
+            <a @click="switchComponent('student')" class="overview" :class="component === 'student' ? 'activeClass' : 'notActive'">Students </a>
+            <a @click="switchComponent('courses')" class="overview" :class="component === 'courses' ? 'activeClass' : 'notActive'">Courses </a>  
+            <a @click="switchComponent('earnings')" class="overview" :class="component === 'earnings' ? 'activeClass' : 'notActive'">Earnings</a> 
       </span>
     
      
@@ -138,10 +141,15 @@ import Earnings from '@/components/Earnings.vue';
     width:auto !important;
 }
 .overview{
-    padding-right: 2rem; text-decoration: none; color: black;
+    margin: 10px;
+    text-decoration: none; 
+    color: black;
     cursor: pointer;
+    font-size: 17px;
 }
 .activeClass{
     color: #6a71ec;
+    border-bottom: 3px solid #6a71ec;
+    background: none;
 }
 </style>
