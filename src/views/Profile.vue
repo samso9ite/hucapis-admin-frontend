@@ -40,6 +40,13 @@
                           <label for="pwd" class="form-label">Phone Number</label>
                           <input type="text" class="form-control" v-model="phone_number">
                       </div>
+
+                      <div class="mb-3">
+                          <label for="pwd" class="form-label">Country</label>
+                          <select class="form-control" v-model="country_id">
+                            <option v-for="country in countries" :key="country" :value="country.id">{{ country.name }}</option>
+                          </select>
+                      </div>
                      
                       <button class="btn btn-primary card-btn-full" @click="updateProfile()" :disabled="loading">Submit</button>
                      </form>
@@ -97,9 +104,10 @@ export default {
             new_password: '',
             confirm_password: '',
             pwd_errors: [],
-            country: '',
+            country_id: 163,
             pwd_loading: false,
-            loading: false
+            loading: false,
+            countries: []
         }
     },
     computed: { ...mapGetters({user: "StateUser"})},
@@ -138,20 +146,20 @@ export default {
         },
         updateProfile(){
             this.loading = true
+            let name = this.first_name + this.last_name
             const formData = new FormData();
             formData.append("name", this.first_name)
-            formData.append("last_name", this.last_name)
             formData.append("username", this.username)
             formData.append("email", this.email)
             formData.append("phone_number", this.phone_number)
             formData.append("email_notification", 1)
+            formData.append("country_id", this.country_id)
             formData.append("photo", this.profile_pic)
 
             Api.axios_instance.post(Api.baseUrl+'profile/update', formData)
             .then(res => {
                 console.log(res);
                 this.$toastr.s("Profile Updated Successfully");
-                // this.$store.dispatch('')
             })
             .catch(err => {
                 console.log(err);
@@ -159,9 +167,17 @@ export default {
             .finally(() => {
                 this.loading = false
             })
+        },
+        getCountries(){
+            Api.axios_instance.get(Api.baseUrl+'countries')
+            .then(res => {
+                console.log(res);
+                this.countries = res.data
+            })
         }
     },
     mounted(){
+        this.getCountries()
         this.first_name = this.user.name
         this.last_name = this.user.last_name
         this.username = this.user.username

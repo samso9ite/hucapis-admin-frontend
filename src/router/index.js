@@ -115,6 +115,12 @@ const routes = [
     props: true
   },
   {
+    path: '/vid-player/:id/:topic_id',
+    name: 'CourseDetails',
+    component: () => import('../views/CourseDetails.vue'),
+    props: true
+  },
+  {
     path: '/learners',
     name: 'Learners',
     component: () => import('../views/Learners.vue')
