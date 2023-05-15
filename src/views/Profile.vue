@@ -143,17 +143,18 @@ export default {
         },
         handleFileUpload(){
             this.profile_pic = this.$refs.profile_pic.files[0]
+            console.log(this.profile_pic);
         },
         updateProfile(){
             this.loading = true
             let name = this.first_name + this.last_name
-            const formData = new FormData();
-            formData.append("name", this.first_name)
+            const formData = new FormData();    
+            formData.append("first_name", this.first_name)
+            formData.append("last_name", this.last_name)
             formData.append("username", this.username)
-            formData.append("email", this.email)
             formData.append("phone_number", this.phone_number)
             formData.append("email_notification", 1)
-            formData.append("country_id", this.country_id)
+            // formData.append("country_id", this.country_id)
             formData.append("photo", this.profile_pic)
 
             Api.axios_instance.post(Api.baseUrl+'profile/update', formData)
